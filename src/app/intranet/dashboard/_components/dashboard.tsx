@@ -62,8 +62,6 @@ const sheetNames = {
 
 // No longer need kpiSheetNames as they are calculated
 const kpiSheetNames = {
-    employees: 'KPIs Empleados',
-    expenses: 'KPIs Gastos',
     suppliers: 'KPIs Proveedores',
 };
 
@@ -320,6 +318,56 @@ export default function Dashboard() {
         });
     };
 
+    const processExpensesData = (data) => {
+        const categoryAmounts = {};
+        let totalExpenses = 0;
+        let totalFixedCost = 0;
+        let totalVatAmount = 0;
+        let vatCount = 0;
+        
+        data.forEach(expense => {
+            const amount = expense.importe || 0;
+            totalExpenses += amount;
+            
+            if (String(expense.periodicidad).toLowerCase() === 'mensual') {
+                totalFixedCost += amount;
+            }
+            
+            const category = expense.id_categoria_gasto || 'Sin Categoría';
+            categoryAmounts[category] = (categoryAmounts[category] || 0) + amount;
+            
+            if (expense.tipo_iva && typeof expense.tipo_iva === 'string') {
+                 const vatRate = parseFloat(expense.tipo_iva.replace('%', ''));
+                 if(!isNaN(vatRate)) {
+                    totalVatAmount += vatRate;
+                    vatCount++;
+                 }
+            }
+        });
+        
+        const chartData = Object.entries(categoryAmounts).map(([category, amount]) => ({
+            category,
+            amount
+        })).sort((a,b) => b.amount - a.amount);
+        setExpensesData(chartData);
+
+        const fixedCostPct = totalExpenses > 0 ? (totalFixedCost / totalExpenses) * 100 : 0;
+        
+        const topCategory = Object.keys(categoryAmounts).length > 0
+            ? Object.entries(categoryAmounts).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+            : 'N/A';
+        
+        const avgVat = vatCount > 0 ? totalVatAmount / vatCount : 0;
+
+        setExpensesKpis({
+            totalExpenses: `€${totalExpenses.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+            fixedCostPct: `${fixedCostPct.toFixed(0)}%`,
+            topCategory: topCategory,
+            avgVat: `${avgVat.toFixed(1)}%`
+        });
+    };
+
+
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -375,15 +423,29 @@ export default function Dashboard() {
                 } else {
                     toast({ title: `La hoja "${sheetNames.employees}" no existe`, variant: 'destructive' });
                 }
+                
+                // Process Expenses sheet
+                const expensesSheet = workbook.Sheets[sheetNames.expenses];
+                if (expensesSheet) {
+                    const expensesJson = XLSX.utils.sheet_to_json(expensesSheet);
+                    processExpensesData(expensesJson);
+                } else {
+                    toast({ title: `La hoja "${sheetNames.expenses}" no existe`, variant: 'destructive' });
+                }
 
 
                 const parseSheet = (sheetName, setter, kpiSheetName, kpiSetter) => {
                     const worksheet = workbook.Sheets[sheetName];
                     if (worksheet) {
                         const jsonData = XLSX.utils.sheet_to_json(worksheet);
-                        if (sheetName === sheetNames.employees) {
-                           // Already processed
-                        } else {
+                        if (
+                            sheetName !== sheetNames.sales && 
+                            sheetName !== sheetNames.products &&
+                            sheetName !== sheetNames.marketing &&
+                            sheetName !== sheetNames.clients &&
+                            sheetName !== sheetNames.employees &&
+                            sheetName !== sheetNames.expenses
+                        ) {
                             setter(jsonData);
                         }
                     } else if (
@@ -391,7 +453,8 @@ export default function Dashboard() {
                         sheetName !== sheetNames.products &&
                         sheetName !== sheetNames.marketing &&
                         sheetName !== sheetNames.clients &&
-                        sheetName !== sheetNames.employees
+                        sheetName !== sheetNames.employees &&
+                        sheetName !== sheetNames.expenses
                         ) {
                         toast({ title: `La hoja "${sheetName}" no existe`, variant: 'destructive' });
                     }
@@ -402,14 +465,10 @@ export default function Dashboard() {
                              const kpiJson = XLSX.utils.sheet_to_json(kpiWorksheet, { header: 1 });
                              const kpis = Object.fromEntries(kpiJson.slice(1).map(row => [row[0], row[1]]));
                              kpiSetter(kpis);
-                        } else {
-                            // toast({ title: `La hoja "${kpiSheetName}" no existe`, variant: 'destructive' });
                         }
                     }
                 };
 
-                // parseSheet(sheetNames.employees, setEmployeesData, kpiSheetNames.employees, setEmployeesKpis);
-                parseSheet(sheetNames.expenses, setExpensesData, kpiSheetNames.expenses, setExpensesKpis);
                 parseSheet(sheetNames.suppliers, setSuppliersData, kpiSheetNames.suppliers, setSuppliersKpis);
 
                 toast({ title: 'Datos cargados', description: 'El dashboard ha sido actualizado con el archivo Excel.' });
@@ -654,3 +713,6 @@ export default function Dashboard() {
 
     
 
+
+
+    
