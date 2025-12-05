@@ -36,7 +36,11 @@ const CustomTooltip = ({ active, payload, label }) => {
           <p className="label font-bold text-foreground">{`${label}`}</p>
           {payload.map((entry, index) => (
               <p key={`item-${index}`} style={{ color: entry.color }}>
-                  {`${entry.name}: ${entry.value.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}`}
+                  {`${entry.name}: ${
+                    typeof entry.value === 'number' && entry.name !== 'Stock' 
+                    ? entry.value.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }) 
+                    : entry.value
+                  }`}
               </p>
           ))}
         </div>
@@ -58,7 +62,6 @@ const sheetNames = {
 
 // No longer need kpiSheetNames as they are calculated
 const kpiSheetNames = {
-    products: 'KPIs Productos',
     marketing: 'KPIs Marketing',
     clients: 'KPIs Clientes',
     employees: 'KPIs Empleados',
@@ -95,8 +98,6 @@ export default function Dashboard() {
         let totalDiscount = 0;
     
         data.forEach(sale => {
-            // Excel dates are numbers. We need to convert them to JS dates.
-            // new Date(1900, 0, sale.fecha_venta - 1) is a common way to do it.
             const date = new Date(1900, 0, sale.fecha_venta - 1);
             const monthIndex = date.getMonth();
             const monthName = date.toLocaleString('es-ES', { month: 'long' });
@@ -136,6 +137,53 @@ export default function Dashboard() {
         });
     };
 
+    const processProductsData = (data) => {
+        let totalStockValue = 0;
+        let totalStockItems = 0;
+        let totalMargin = 0;
+        let marginCount = 0;
+        const supplierCounts = {};
+
+        data.forEach(product => {
+            const stock = product.stock_actual || 0;
+            const salePrice = product.precio_venta || 0;
+            const costPrice = product.precio_coste || 0;
+
+            totalStockValue += stock * salePrice;
+            totalStockItems += stock;
+
+            if (salePrice > 0) {
+                const margin = ((salePrice - costPrice) / salePrice) * 100;
+                totalMargin += margin;
+                marginCount++;
+            }
+
+            if (product.nombre_proveedor) {
+                supplierCounts[product.nombre_proveedor] = (supplierCounts[product.nombre_proveedor] || 0) + 1;
+            }
+        });
+
+        const avgMargin = marginCount > 0 ? totalMargin / marginCount : 0;
+
+        const topSupplier = Object.keys(supplierCounts).length > 0 
+            ? Object.entries(supplierCounts).reduce((a, b) => a[1] > b[1] ? a : b)[0] 
+            : 'N/A';
+
+        setProductsKpis({
+            totalStockValue: `€${totalStockValue.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+            totalStockItems: totalStockItems.toLocaleString('es-ES'),
+            avgMargin: `${avgMargin.toFixed(1)}`,
+            topSupplier: topSupplier,
+        });
+
+        const sortedProducts = [...data].sort((a, b) => (b.stock_actual || 0) - (a.stock_actual || 0));
+        const top5Products = sortedProducts.slice(0, 5).map(p => ({
+            name: p.nombre_producto,
+            stock: p.stock_actual
+        }));
+        setProductsData(top5Products);
+    };
+
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -156,12 +204,21 @@ export default function Dashboard() {
                      toast({ title: `La hoja "${sheetNames.sales}" no existe`, variant: 'destructive' });
                 }
 
+                // Process Products sheet
+                const productsSheet = workbook.Sheets[sheetNames.products];
+                if (productsSheet) {
+                    const productsJson = XLSX.utils.sheet_to_json(productsSheet);
+                    processProductsData(productsJson);
+                } else {
+                    toast({ title: `La hoja "${sheetNames.products}" no existe`, variant: 'destructive' });
+                }
+
                 const parseSheet = (sheetName, setter, kpiSheetName, kpiSetter) => {
                     const worksheet = workbook.Sheets[sheetName];
                     if (worksheet) {
                         const jsonData = XLSX.utils.sheet_to_json(worksheet);
                         setter(jsonData);
-                    } else if (sheetName !== sheetNames.sales) { // Avoid double toast for sales
+                    } else if (sheetName !== sheetNames.sales && sheetName !== sheetNames.products) {
                         toast({ title: `La hoja "${sheetName}" no existe`, variant: 'destructive' });
                     }
                     
@@ -177,7 +234,6 @@ export default function Dashboard() {
                     }
                 };
 
-                parseSheet(sheetNames.products, setProductsData, kpiSheetNames.products, setProductsKpis);
                 parseSheet(sheetNames.marketing, setMarketingData, kpiSheetNames.marketing, setMarketingKpis);
                 parseSheet(sheetNames.clients, setClientsData, kpiSheetNames.clients, setClientsKpis);
                 parseSheet(sheetNames.employees, setEmployeesData, kpiSheetNames.employees, setEmployeesKpis);
