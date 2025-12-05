@@ -1,12 +1,24 @@
+"use client";
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, PlayCircle, Target, Users, BookOpen, Gem, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { placeholderImages } from '@/lib/placeholder-images';
+import { useRef, useState } from 'react';
 
 export default function Home() {
   const heroImage = placeholderImages.find(p => p.id === "hero-image");
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
 
   return (
     <div className="flex flex-col">
@@ -147,19 +159,23 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="relative aspect-video rounded-lg overflow-hidden shadow-2xl group">
+          <div className="relative aspect-video rounded-lg overflow-hidden shadow-2xl group" onClick={!isPlaying ? handlePlay : undefined}>
             <video
+              ref={videoRef}
               src="/mi-video.mp4"
-              autoPlay
-              loop
-              muted
               playsInline
+              controls={isPlaying}
               className="object-cover w-full h-full"
+              onEnded={() => setIsPlaying(false)}
             />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-              <PlayCircle className="w-20 h-20 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300 cursor-pointer" />
-            </div>
-            <div className="absolute bottom-4 left-4 text-white font-headline text-lg">Vídeo Corporativo de OCTAVA</div>
+            {!isPlaying && (
+              <>
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                  <PlayCircle className="w-20 h-20 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300 cursor-pointer" />
+                </div>
+                <div className="absolute bottom-4 left-4 text-white font-headline text-lg">Vídeo Corporativo de OCTAVA</div>
+              </>
+            )}
           </div>
         </div>
       </section>
