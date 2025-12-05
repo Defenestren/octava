@@ -396,7 +396,7 @@ export default function Dashboard() {
                      <Card>
                         <CardHeader>
                             <CardTitle>Interacciones y Coste por Campaña</CardTitle>
-                             <CardDescription>Evolución de las interacciones y el coste a lo largo del tiempo.</CardDescription>
+                             <CardDescription>Análisis del rendimiento y coste de las diferentes campañas de marketing.</CardDescription>
                         </CardHeader>
                         <CardContent>
                              <ResponsiveContainer width="100%" height={300}>
