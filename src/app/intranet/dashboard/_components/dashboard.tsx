@@ -37,7 +37,7 @@ const CustomTooltip = ({ active, payload, label }) => {
           {payload.map((entry, index) => (
               <p key={`item-${index}`} style={{ color: entry.color }}>
                   {`${entry.name}: ${
-                    typeof entry.value === 'number' && entry.name !== 'Stock' && entry.name !== 'Interacciones' && entry.name !== 'Empleados' && entry.name !== 'Proveedores'
+                    typeof entry.value === 'number' && entry.name !== 'Stock' && entry.name !== 'Interacciones' && entry.name !== 'Empleados' && entry.name !== 'Proveedores' && entry.name !== 'Nuevos' && entry.name !== 'Recurrentes'
                     ? entry.value.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }) 
                     : entry.value
                   }`}
@@ -62,7 +62,6 @@ const sheetNames = {
 
 // No longer need kpiSheetNames as they are calculated
 const kpiSheetNames = {
-    clients: 'KPIs Clientes',
     employees: 'KPIs Empleados',
     expenses: 'KPIs Gastos',
     suppliers: 'KPIs Proveedores',
@@ -221,6 +220,61 @@ export default function Dashboard() {
         setMarketingData(Object.values(campaignData));
     };
 
+    const processClientsData = (data) => {
+        const monthlyData = {};
+        const segmentCounts = {};
+        let totalClients = 0;
+    
+        const now = new Date();
+        const lastMonthDate = new Date(now.getFullYear(), now.getMonth() -1, 1);
+    
+        data.forEach(client => {
+            const signupDate = new Date(1900, 0, client.fecha_alta - 1);
+            const monthIndex = signupDate.getMonth();
+            const year = signupDate.getFullYear();
+            const monthName = signupDate.toLocaleString('es-ES', { month: 'long' });
+            const monthKey = `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)} ${year}`;
+            
+            if (!monthlyData[monthKey]) {
+                monthlyData[monthKey] = { month: `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)}`, monthIndex, year, nuevos: 0, recurrentes: 0 };
+            }
+
+            monthlyData[monthKey].nuevos += 1;
+    
+            if (client.estilo_preferido) {
+                segmentCounts[client.estilo_preferido] = (segmentCounts[client.estilo_preferido] || 0) + 1;
+            }
+        });
+    
+        const sortedMonths = Object.values(monthlyData).sort((a, b) => a.year - b.year || a.monthIndex - b.monthIndex);
+        
+        let cumulativeClients = 0;
+        const chartData = sortedMonths.map(month => {
+            month.recurrentes = cumulativeClients;
+            cumulativeClients += month.nuevos;
+            return month;
+        });
+
+        totalClients = cumulativeClients;
+        setClientsData(chartData);
+    
+        const lastMonthData = chartData[chartData.length - 1] || { nuevos: 0, recurrentes: 0 };
+        const newClientsThisMonth = lastMonthData.nuevos;
+        const totalClientsLastMonth = lastMonthData.nuevos + lastMonthData.recurrentes;
+        const loyaltyRate = totalClientsLastMonth > 0 ? (lastMonthData.recurrentes / totalClientsLastMonth) * 100 : 0;
+        
+        const topSegment = Object.keys(segmentCounts).length > 0
+            ? Object.entries(segmentCounts).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+            : 'N/A';
+    
+        setClientsKpis({
+            totalClients: totalClientsLastMonth.toLocaleString('es-ES'),
+            loyaltyRate: `${loyaltyRate.toFixed(0)}%`,
+            newClientsThisMonth: newClientsThisMonth.toLocaleString('es-ES'),
+            topSegment: topSegment,
+        });
+    };
+
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -259,6 +313,15 @@ export default function Dashboard() {
                      toast({ title: `La hoja "${sheetNames.marketing}" no existe`, variant: 'destructive' });
                  }
 
+                // Process Clients sheet
+                const clientsSheet = workbook.Sheets[sheetNames.clients];
+                if (clientsSheet) {
+                    const clientsJson = XLSX.utils.sheet_to_json(clientsSheet);
+                    processClientsData(clientsJson);
+                } else {
+                    toast({ title: `La hoja "${sheetNames.clients}" no existe`, variant: 'destructive' });
+                }
+
                 const parseSheet = (sheetName, setter, kpiSheetName, kpiSetter) => {
                     const worksheet = workbook.Sheets[sheetName];
                     if (worksheet) {
@@ -267,7 +330,8 @@ export default function Dashboard() {
                     } else if (
                         sheetName !== sheetNames.sales && 
                         sheetName !== sheetNames.products &&
-                        sheetName !== sheetNames.marketing
+                        sheetName !== sheetNames.marketing &&
+                        sheetName !== sheetNames.clients
                         ) {
                         toast({ title: `La hoja "${sheetName}" no existe`, variant: 'destructive' });
                     }
@@ -284,7 +348,6 @@ export default function Dashboard() {
                     }
                 };
 
-                parseSheet(sheetNames.clients, setClientsData, kpiSheetNames.clients, setClientsKpis);
                 parseSheet(sheetNames.employees, setEmployeesData, kpiSheetNames.employees, setEmployeesKpis);
                 parseSheet(sheetNames.expenses, setExpensesData, kpiSheetNames.expenses, setExpensesKpis);
                 parseSheet(sheetNames.suppliers, setSuppliersData, kpiSheetNames.suppliers, setSuppliersKpis);
