@@ -1,3 +1,64 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-image",
+      "description": "A dramatic shot of a vintage electric guitar on a stand, with soft, moody lighting.",
+      "imageUrl": "https://images.unsplash.com/photo-1684117736387-69935a4ed00d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx2aW50YWdlJTIwZ3VpdGFyfGVufDB8fHx8MTc2NDg3MTM3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vintage guitar"
+    },
+    {
+      "id": "product-guitar-1",
+      "description": "A vintage-style electric guitar with a sunburst finish.",
+      "imageUrl": "https://images.unsplash.com/photo-1550985616-10810253b84d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxlbGVjdHJpYyUyMGd1aXRhcnxlbnwwfHx8fDE3NjQ4NzQ3ODF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "electric guitar"
+    },
+    {
+      "id": "product-guitar-2",
+      "description": "A sleek, black electric bass guitar.",
+      "imageUrl": "https://images.unsplash.com/photo-1485278537138-4e8911a13c02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxiYXNzJTIwZ3VpdGFyfGVufDB8fHx8MTc2NDkxMzcyMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bass guitar"
+    },
+    {
+      "id": "product-amp-1",
+      "description": "A classic tube amplifier with a tweed covering.",
+      "imageUrl": "https://images.unsplash.com/photo-1565829073670-cd08d8c63643?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxndWl0YXIlMjBhbXBsaWZpZXJ8ZW58MHx8fHwxNzY0OTIzMTM5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "guitar amplifier"
+    },
+    {
+      "id": "product-pedal-1",
+      "description": "A colorful effects pedal for an electric guitar.",
+      "imageUrl": "https://images.unsplash.com/photo-1614413970884-6dba7310bd2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxndWl0YXIlMjBwZWRhbHxlbnwwfHx8fDE3NjQ5Mzg1NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "guitar pedal"
+    },
+    {
+      "id": "product-drum-1",
+      "description": "A vintage drum kit.",
+      "imageUrl": "https://images.unsplash.com/photo-1504653601220-f1a8ece25e4a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcnVtJTIwa2l0fGVufDB8fHx8MTc2NDg3MzY3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drum kit"
+    },
+    {
+      "id": "about-us-image",
+      "description": "A luthier working on a guitar in a workshop.",
+      "imageUrl": "https://images.unsplash.com/photo-1655569615075-6ae8a1b4e6f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxsdXRoaWVyJTIwd29ya3Nob3B8ZW58MHx8fHwxNzY0OTM4NTQyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "luthier workshop"
+    },
+    {
+      "id": "community-banner",
+      "description": "A crowd at a live music event.",
+      "imageUrl": "https://images.unsplash.com/photo-1656283384093-1e227e621fad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtdXNpYyUyMGNvbmNlcnR8ZW58MHx8fHwxNzY0ODQ0Mjg3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "music concert"
+    },
+    {
+      "id": "services-banner",
+      "description": "Close up on guitar strings being cleaned.",
+      "imageUrl": "https://images.unsplash.com/photo-1573722333702-cbf272a7a3d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxndWl0YXIlMjBtYWludGVuYW5jZXxlbnwwfHx8fDE3NjQ5Mzg1NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "guitar maintenance"
+    },
+    {
+      "id": "contact-banner",
+      "description": "A vintage rotary telephone on a wooden desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1615713508098-9c0c327df3a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx2aW50YWdlJTIwdGVsZXBob25lfGVufDB8fHx8MTc2NDg3MTM2OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vintage telephone"
+    }
+  ]
 }
