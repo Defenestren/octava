@@ -1,19 +1,23 @@
 'use client';
 
+import { useState, useRef } from 'react';
+import * as XLSX from 'xlsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { Button } from '@/components/ui/button';
-import { Upload } from 'lucide-react';
-import { salesData, kpis as salesKpis } from '@/lib/data/sales';
-import { productsData, kpis as productsKpis } from '@/lib/data/products';
-import { marketingData, kpis as marketingKpis } from '@/lib/data/marketing';
-import { clientsData, kpis as clientsKpis } from '@/lib/data/clients';
-import { employeesData, kpis as employeesKpis } from '@/lib/data/employees';
-import { expensesData, kpis as expensesKpis } from '@/lib/data/expenses';
-import { suppliersData, kpis as suppliersKpis } from '@/lib/data/suppliers';
+import { Upload, Loader2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
-const KpiCard = ({ title, value, change, description }) => (
+import { salesData as initialSalesData, kpis as initialSalesKpis } from '@/lib/data/sales';
+import { productsData as initialProductsData, kpis as initialProductsKpis } from '@/lib/data/products';
+import { marketingData as initialMarketingData, kpis as initialMarketingKpis } from '@/lib/data/marketing';
+import { clientsData as initialClientsData, kpis as initialClientsKpis } from '@/lib/data/clients';
+import { employeesData as initialEmployeesData, kpis as initialEmployeesKpis } from '@/lib/data/employees';
+import { expensesData as initialExpensesData, kpis as initialExpensesKpis } from '@/lib/data/expenses';
+import { suppliersData as initialSuppliersData, kpis as initialSuppliersKpis } from '@/lib/data/suppliers';
+
+const KpiCard = ({ title, value, change }) => (
     <Card>
         <CardHeader>
             <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
@@ -42,9 +46,112 @@ const CustomTooltip = ({ active, payload, label }) => {
     return null;
   };
 
+const sheetNames = {
+    sales: 'Ventas',
+    products: 'Productos',
+    marketing: 'Marketing',
+    clients: 'Clientes',
+    employees: 'Empleados',
+    expenses: 'Gastos',
+    suppliers: 'Proveedores',
+};
+
+const kpiSheetNames = {
+    sales: 'KPIs Ventas',
+    products: 'KPIs Productos',
+    marketing: 'KPIs Marketing',
+    clients: 'KPIs Clientes',
+    employees: 'KPIs Empleados',
+    expenses: 'KPIs Gastos',
+    suppliers: 'KPIs Proveedores',
+};
+
+
 export default function Dashboard() {
+    const [salesData, setSalesData] = useState(initialSalesData);
+    const [salesKpis, setSalesKpis] = useState(initialSalesKpis);
+    const [productsData, setProductsData] = useState(initialProductsData);
+    const [productsKpis, setProductsKpis] = useState(initialProductsKpis);
+    const [marketingData, setMarketingData] = useState(initialMarketingData);
+    const [marketingKpis, setMarketingKpis] = useState(initialMarketingKpis);
+    const [clientsData, setClientsData] = useState(initialClientsData);
+    const [clientsKpis, setClientsKpis] = useState(initialClientsKpis);
+    const [employeesData, setEmployeesData] = useState(initialEmployeesData);
+    const [employeesKpis, setEmployeesKpis] = useState(initialEmployeesKpis);
+    const [expensesData, setExpensesData] = useState(initialExpensesData);
+    const [expensesKpis, setExpensesKpis] = useState(initialExpensesKpis);
+    const [suppliersData, setSuppliersData] = useState(initialSuppliersData);
+    const [suppliersKpis, setSuppliersKpis] = useState(initialSuppliersKpis);
+
+    const [isLoading, setIsLoading] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const { toast } = useToast();
+
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        setIsLoading(true);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = e.target?.result;
+                const workbook = XLSX.read(data, { type: 'binary' });
+
+                const parseSheet = (sheetName, setter, kpiSheetName, kpiSetter) => {
+                    const worksheet = workbook.Sheets[sheetName];
+                    if (worksheet) {
+                        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+                        setter(jsonData);
+                    } else {
+                        toast({ title: `La hoja "${sheetName}" no existe`, variant: 'destructive' });
+                    }
+                    
+                    const kpiWorksheet = workbook.Sheets[kpiSheetName];
+                    if (kpiWorksheet) {
+                         const kpiJson = XLSX.utils.sheet_to_json(kpiWorksheet, { header: 1 });
+                         const kpis = Object.fromEntries(kpiJson.slice(1).map(row => [row[0], row[1]]));
+                         kpiSetter(kpis);
+                    } else {
+                        toast({ title: `La hoja "${kpiSheetName}" no existe`, variant: 'destructive' });
+                    }
+                };
+
+                parseSheet(sheetNames.sales, setSalesData, kpiSheetNames.sales, setSalesKpis);
+                parseSheet(sheetNames.products, setProductsData, kpiSheetNames.products, setProductsKpis);
+                parseSheet(sheetNames.marketing, setMarketingData, kpiSheetNames.marketing, setMarketingKpis);
+                parseSheet(sheetNames.clients, setClientsData, kpiSheetNames.clients, setClientsKpis);
+                parseSheet(sheetNames.employees, setEmployeesData, kpiSheetNames.employees, setEmployeesKpis);
+                parseSheet(sheetNames.expenses, setExpensesData, kpiSheetNames.expenses, setExpensesKpis);
+                parseSheet(sheetNames.suppliers, setSuppliersData, kpiSheetNames.suppliers, setSuppliersKpis);
+
+                toast({ title: 'Datos cargados', description: 'El dashboard ha sido actualizado con el archivo Excel.' });
+            } catch (error) {
+                console.error("Error processing XLSX file:", error);
+                toast({ title: 'Error al procesar el archivo', description: 'El formato del archivo no es válido.', variant: 'destructive' });
+            } finally {
+                setIsLoading(false);
+                if(fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
+            }
+        };
+        reader.readAsBinaryString(file);
+    };
+
+    const triggerFileInput = () => {
+        fileInputRef.current?.click();
+    };
+
     return (
         <Tabs defaultValue="sales" className="w-full">
+            <input 
+                type="file" 
+                ref={fileInputRef}
+                onChange={handleFileUpload}
+                className="hidden"
+                accept=".xlsx, .xls"
+            />
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                 <TabsList className="flex-wrap h-auto">
                     <TabsTrigger value="sales">Ventas</TabsTrigger>
@@ -55,8 +162,8 @@ export default function Dashboard() {
                     <TabsTrigger value="expenses">Gastos</TabsTrigger>
                     <TabsTrigger value="suppliers">Proveedores</TabsTrigger>
                 </TabsList>
-                <Button>
-                    <Upload className="mr-2 h-4 w-4" />
+                <Button onClick={triggerFileInput} disabled={isLoading}>
+                    {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
                     Cargar Tablas
                 </Button>
             </div>
