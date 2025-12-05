@@ -367,6 +367,48 @@ export default function Dashboard() {
         });
     };
 
+    const processSuppliersData = (data) => {
+        const countryCounts = {};
+        const categoryCounts = {};
+        const riskLevels = { 'Bajo': 1, 'Bajo-Medio': 2, 'Medio': 3, 'Medio-Alto': 4, 'Alto': 5 };
+        let totalRiskScore = 0;
+        let riskCount = 0;
+
+        data.forEach(supplier => {
+            if (supplier.pais) {
+                countryCounts[supplier.pais] = (countryCounts[supplier.pais] || 0) + 1;
+            }
+            if (supplier.categoria_principal) {
+                categoryCounts[supplier.categoria_principal] = (categoryCounts[supplier.categoria_principal] || 0) + 1;
+            }
+            if (supplier.nivel_riesgo && riskLevels[supplier.nivel_riesgo]) {
+                totalRiskScore += riskLevels[supplier.nivel_riesgo];
+                riskCount++;
+            }
+        });
+
+        const chartData = Object.entries(countryCounts).map(([country, count]) => ({ country, count }));
+        setSuppliersData(chartData);
+
+        const topCategory = Object.keys(categoryCounts).length > 0
+            ? Object.entries(categoryCounts).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+            : 'N/A';
+
+        const topCountry = Object.keys(countryCounts).length > 0
+            ? Object.entries(countryCounts).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+            : 'N/A';
+
+        const avgRiskScore = riskCount > 0 ? totalRiskScore / riskCount : 0;
+        const avgRiskLabel = Object.keys(riskLevels).find(key => riskLevels[key] >= avgRiskScore) || 'N/A';
+
+        setSuppliersKpis({
+            totalSuppliers: data.length.toLocaleString('es-ES'),
+            topCategory: topCategory,
+            avgRisk: avgRiskLabel,
+            topCountry: topCountry
+        });
+    };
+
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -432,6 +474,15 @@ export default function Dashboard() {
                 } else {
                     toast({ title: `La hoja "${sheetNames.expenses}" no existe`, variant: 'destructive' });
                 }
+                
+                // Process Suppliers sheet
+                const suppliersSheet = workbook.Sheets[sheetNames.suppliers];
+                if (suppliersSheet) {
+                    const suppliersJson = XLSX.utils.sheet_to_json(suppliersSheet);
+                    processSuppliersData(suppliersJson);
+                } else {
+                    toast({ title: `La hoja "${sheetNames.suppliers}" no existe`, variant: 'destructive' });
+                }
 
 
                 const parseSheet = (sheetName, setter, kpiSheetName, kpiSetter) => {
@@ -444,7 +495,8 @@ export default function Dashboard() {
                             sheetName !== sheetNames.marketing &&
                             sheetName !== sheetNames.clients &&
                             sheetName !== sheetNames.employees &&
-                            sheetName !== sheetNames.expenses
+                            sheetName !== sheetNames.expenses &&
+                            sheetName !== sheetNames.suppliers
                         ) {
                             setter(jsonData);
                         }
@@ -454,7 +506,8 @@ export default function Dashboard() {
                         sheetName !== sheetNames.marketing &&
                         sheetName !== sheetNames.clients &&
                         sheetName !== sheetNames.employees &&
-                        sheetName !== sheetNames.expenses
+                        sheetName !== sheetNames.expenses &&
+                        sheetName !== sheetNames.suppliers
                         ) {
                         toast({ title: `La hoja "${sheetName}" no existe`, variant: 'destructive' });
                     }
@@ -469,7 +522,9 @@ export default function Dashboard() {
                     }
                 };
 
-                parseSheet(sheetNames.suppliers, setSuppliersData, kpiSheetNames.suppliers, setSuppliersKpis);
+                // This part is now mostly redundant as processing functions are called directly
+                // but left for any potential future sheets that don't have custom processing
+                // parseSheet(sheetNames.suppliers, setSuppliersData, kpiSheetNames.suppliers, setSuppliersKpis);
 
                 toast({ title: 'Datos cargados', description: 'El dashboard ha sido actualizado con el archivo Excel.' });
             } catch (error) {
@@ -714,5 +769,7 @@ export default function Dashboard() {
     
 
 
+
+    
 
     
