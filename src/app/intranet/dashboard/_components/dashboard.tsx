@@ -62,7 +62,6 @@ const sheetNames = {
 
 // No longer need kpiSheetNames as they are calculated
 const kpiSheetNames = {
-    marketing: 'KPIs Marketing',
     clients: 'KPIs Clientes',
     employees: 'KPIs Empleados',
     expenses: 'KPIs Gastos',
@@ -184,6 +183,44 @@ export default function Dashboard() {
         setProductsData(top5Products);
     };
 
+    const processMarketingData = (data) => {
+        let totalInteractions = data.length;
+        let totalCost = 0;
+        const channelCounts = {};
+        const campaignData = {};
+
+        data.forEach(item => {
+            const cost = item.coste_interaccion || 0;
+            totalCost += cost;
+
+            const channel = item.tipo_interaccion;
+            if (channel) {
+                channelCounts[channel] = (channelCounts[channel] || 0) + 1;
+            }
+            
+            const campaignName = item.campania || 'Sin Campaña';
+            if (!campaignData[campaignName]) {
+                campaignData[campaignName] = { campaign: campaignName, interactions: 0, cost: 0 };
+            }
+            campaignData[campaignName].interactions += 1;
+            campaignData[campaignName].cost += cost;
+        });
+
+        const costPerInteraction = totalInteractions > 0 ? totalCost / totalInteractions : 0;
+        const topChannel = Object.keys(channelCounts).length > 0 
+            ? Object.entries(channelCounts).reduce((a, b) => a[1] > b[1] ? a : b)[0] 
+            : 'N/A';
+
+        setMarketingKpis({
+            totalInteractions: totalInteractions.toLocaleString('es-ES'),
+            totalCost: `€${totalCost.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+            costPerInteraction: `€${costPerInteraction.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+            topChannel: topChannel
+        });
+
+        setMarketingData(Object.values(campaignData));
+    };
+
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -213,12 +250,25 @@ export default function Dashboard() {
                     toast({ title: `La hoja "${sheetNames.products}" no existe`, variant: 'destructive' });
                 }
 
+                 // Process Marketing sheet
+                 const marketingSheet = workbook.Sheets[sheetNames.marketing];
+                 if (marketingSheet) {
+                     const marketingJson = XLSX.utils.sheet_to_json(marketingSheet);
+                     processMarketingData(marketingJson);
+                 } else {
+                     toast({ title: `La hoja "${sheetNames.marketing}" no existe`, variant: 'destructive' });
+                 }
+
                 const parseSheet = (sheetName, setter, kpiSheetName, kpiSetter) => {
                     const worksheet = workbook.Sheets[sheetName];
                     if (worksheet) {
                         const jsonData = XLSX.utils.sheet_to_json(worksheet);
                         setter(jsonData);
-                    } else if (sheetName !== sheetNames.sales && sheetName !== sheetNames.products) {
+                    } else if (
+                        sheetName !== sheetNames.sales && 
+                        sheetName !== sheetNames.products &&
+                        sheetName !== sheetNames.marketing
+                        ) {
                         toast({ title: `La hoja "${sheetName}" no existe`, variant: 'destructive' });
                     }
                     
@@ -234,7 +284,6 @@ export default function Dashboard() {
                     }
                 };
 
-                parseSheet(sheetNames.marketing, setMarketingData, kpiSheetNames.marketing, setMarketingKpis);
                 parseSheet(sheetNames.clients, setClientsData, kpiSheetNames.clients, setClientsKpis);
                 parseSheet(sheetNames.employees, setEmployeesData, kpiSheetNames.employees, setEmployeesKpis);
                 parseSheet(sheetNames.expenses, setExpensesData, kpiSheetNames.expenses, setExpensesKpis);
