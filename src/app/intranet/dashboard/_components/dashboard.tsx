@@ -37,7 +37,7 @@ const CustomTooltip = ({ active, payload, label }) => {
           {payload.map((entry, index) => (
               <p key={`item-${index}`} style={{ color: entry.color }}>
                   {`${entry.name}: ${
-                    typeof entry.value === 'number' && entry.name !== 'Stock' 
+                    typeof entry.value === 'number' && entry.name !== 'Stock' && entry.name !== 'Interacciones' && entry.name !== 'Empleados' && entry.name !== 'Proveedores'
                     ? entry.value.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }) 
                     : entry.value
                   }`}
@@ -528,3 +528,5 @@ export default function Dashboard() {
         </Tabs>
     );
 }
+
+    
