@@ -15,8 +15,13 @@ export default function Home() {
 
   const handlePlay = () => {
     if (videoRef.current) {
-      videoRef.current.play();
-      setIsPlaying(true);
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
     }
   };
 
@@ -62,9 +67,9 @@ export default function Home() {
           </div>
           <div className="relative h-80 rounded-lg overflow-hidden shadow-2xl">
              <Image
-                src="https://picsum.photos/seed/guitar-workshop/600/400"
-                alt="Taller de OCTAVA"
-                data-ai-hint="guitar workshop"
+                src="https://storage.googleapis.com/source-buckets/user-uploads/1718919656515-octava-team.png"
+                alt="El equipo de OCTAVA"
+                data-ai-hint="music band portrait"
                 fill
                 className="object-cover"
               />
@@ -159,21 +164,23 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="relative aspect-video rounded-lg overflow-hidden shadow-2xl group" onClick={!isPlaying ? handlePlay : undefined}>
+          <div className="relative aspect-video rounded-lg overflow-hidden shadow-2xl group cursor-pointer" onClick={handlePlay}>
             <video
               ref={videoRef}
               src="/mi-video.mp4"
               playsInline
               controls={isPlaying}
               className="object-cover w-full h-full"
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
               onEnded={() => setIsPlaying(false)}
             />
             {!isPlaying && (
               <>
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <PlayCircle className="w-20 h-20 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300 cursor-pointer" />
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center pointer-events-none">
+                  <PlayCircle className="w-20 h-20 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
                 </div>
-                <div className="absolute bottom-4 left-4 text-white font-headline text-lg">Vídeo Corporativo de OCTAVA</div>
+                <div className="absolute bottom-4 left-4 text-white font-headline text-lg pointer-events-none">Vídeo Corporativo de OCTAVA</div>
               </>
             )}
           </div>
