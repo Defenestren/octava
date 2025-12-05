@@ -148,12 +148,13 @@ export default function Home() {
             </div>
           </div>
           <div className="relative aspect-video rounded-lg overflow-hidden shadow-2xl group">
-            <Image
-              src="https://picsum.photos/seed/stage-lights/1280/720"
-              alt="Actuación en vivo con instrumentos vintage"
-              data-ai-hint="stage lights"
-              fill
-              className="object-cover"
+            <video
+              src="https://storage.googleapis.com/static-firebase-studio-app/octava-video.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="object-cover w-full h-full"
             />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
               <PlayCircle className="w-20 h-20 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300 cursor-pointer" />
