@@ -86,7 +86,7 @@ export const products: Product[] = [
         category: 'Amplificadores',
         price: 2200.00,
         description: 'El rugido del rock de los 80. Un cabezal de un solo canal que ofrece la distorsión más pura y agresiva.',
-        image: { id: 'prod_img_005', description: 'Marshall amp head', imageUrl: 'https://picsum.photos/seed/marshall-amp/600/600', imageHint: 'marshall amplifier' },
+        image: { id: 'prod_img_005', description: 'Cabezal de amplificador Marshall', imageUrl: 'https://picsum.photos/seed/marshall-amp/600/600', imageHint: 'marshall amplifier' },
         stock: 7,
         specs: {
             'Potencia': '100W',
@@ -116,7 +116,7 @@ export const products: Product[] = [
         category: 'Bajos',
         price: 2600.00,
         description: 'Un sonido de bajo distintivo con agudos penetrantes y graves sólidos. Famoso en el rock progresivo y el post-punk.',
-        image: { id: 'prod_img_007', description: 'Rickenbacker bass', imageUrl: 'https://picsum.photos/seed/rickenbacker-bass/600/600', imageHint: 'rickenbacker bass' },
+        image: { id: 'prod_img_007', description: 'Bajo Rickenbacker', imageUrl: 'https://picsum.photos/seed/rickenbacker-bass/600/600', imageHint: 'rickenbacker bass' },
         stock: 5,
         specs: {
             'Tipo de pastillas': 'Single-Coil',
@@ -131,7 +131,7 @@ export const products: Product[] = [
         category: 'Guitarras',
         price: 3500.00,
         description: 'La dreadnought por excelencia. Un estándar en la música folk, bluegrass y country con un tono rico y potente.',
-        image: { id: 'prod_img_008', description: 'Acoustic guitar', imageUrl: 'https://picsum.photos/seed/acoustic-guitar/600/600', imageHint: 'acoustic guitar' },
+        image: { id: 'prod_img_008', description: 'Guitarra acústica', imageUrl: 'https://picsum.photos/seed/acoustic-guitar/600/600', imageHint: 'acoustic guitar' },
         stock: 9,
         specs: {
             'Tipo': 'Acústica (Dreadnought)',

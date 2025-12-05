@@ -14,13 +14,13 @@ import {z} from 'genkit';
 const ProductFilterAssistanceInputSchema = z.object({
   needsDescription: z
     .string()
-    .describe("A description of the customer's needs, including price range, type of music they play, and skill level."),
-  productCatalog: z.string().describe('The OCTAVA product catalog in JSON format.'),
+    .describe("Una descripción de las necesidades del cliente, incluyendo rango de precios, tipo de música que toca y nivel de habilidad."),
+  productCatalog: z.string().describe('El catálogo de productos de OCTAVA en formato JSON.'),
 });
 export type ProductFilterAssistanceInput = z.infer<typeof ProductFilterAssistanceInputSchema>;
 
 const ProductFilterAssistanceOutputSchema = z.object({
-  filteredProducts: z.string().describe('A JSON array of products from the OCTAVA catalog that best match the customer needs.'),
+  filteredProducts: z.string().describe('Un array JSON de productos del catálogo de OCTAVA que mejor se ajustan a las necesidades del cliente.'),
 });
 export type ProductFilterAssistanceOutput = z.infer<typeof ProductFilterAssistanceOutputSchema>;
 
@@ -32,15 +32,15 @@ const prompt = ai.definePrompt({
   name: 'productFilterAssistancePrompt',
   input: {schema: ProductFilterAssistanceInputSchema},
   output: {schema: ProductFilterAssistanceOutputSchema},
-  prompt: `You are an expert musical equipment consultant for OCTAVA. Given a description of a customer's needs and the OCTAVA product catalog, filter the catalog to find the best products for the customer.
+  prompt: `Eres un consultor experto en equipamiento musical para OCTAVA. Dada una descripción de las necesidades de un cliente y el catálogo de productos de OCTAVA, filtra el catálogo para encontrar los mejores productos para el cliente.
 
-Customer Needs: {{{needsDescription}}}
+Necesidades del Cliente: {{{needsDescription}}}
 
-Product Catalog:
+Catálogo de Productos:
 {{{productCatalog}}}
 
-Return a JSON array of the products that best match the customer's needs.
-`, // Removed extraneous newline
+Devuelve un array JSON de los productos que mejor se ajustan a las necesidades del cliente.
+`,
 });
 
 const productFilterAssistanceFlow = ai.defineFlow(

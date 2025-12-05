@@ -24,10 +24,10 @@ export default function ProductsPage() {
         )}
         <div className="relative z-10 p-4 max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-headline font-black uppercase tracking-tighter">
-            Our Collection
+            Nuestra Colección
           </h1>
           <p className="mt-2 text-lg md:text-xl max-w-2xl mx-auto text-gray-200">
-            Hand-picked instruments with soul and history.
+            Instrumentos seleccionados a mano con alma e historia.
           </p>
         </div>
       </section>

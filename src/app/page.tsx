@@ -23,17 +23,17 @@ export default function Home() {
         )}
         <div className="relative z-10 p-4 max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-headline font-black uppercase tracking-tighter text-shadow-lg">
-            Where Legends Are Forged in Wood and Wire
+            Donde las Leyendas se Forjan en Madera y Alambre
           </h1>
           <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto text-gray-200">
-            Inspiring and equipping musicians with exceptional vintage instruments that ignite passion and elevate art.
+            Inspiramos y equipamos a músicos con instrumentos vintage excepcionales que encienden la pasión y elevan el arte.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Button asChild size="lg" className="font-bold">
-              <Link href="/products">Explore The Collection</Link>
+              <Link href="/products">Explora la Colección</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="font-bold bg-black/20 backdrop-blur-sm">
-              <Link href="/services">Our Services</Link>
+              <Link href="/services">Nuestros Servicios</Link>
             </Button>
           </div>
         </div>
@@ -43,15 +43,15 @@ export default function Home() {
       <section id="about" className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">WHO WE ARE</h2>
+            <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">QUIÉNES SOMOS</h2>
             <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-              OCTAVA was born from a shared obsession: the timeless sound and soul of vintage rock instruments. We are more than a store; we are curators of history, technicians of tone, and a sanctuary for artists who believe that the right instrument is an extension of their own voice. Our foundation is built on a deep respect for craftsmanship and a desire to connect musicians with instruments that carry a legacy and inspire new ones.
+              OCTAVA nació de una obsesión compartida: el sonido y el alma atemporales de los instrumentos de rock vintage. Somos más que una tienda; somos curadores de historia, técnicos de tono y un santuario para artistas que creen que el instrumento adecuado es una extensión de su propia voz. Nuestra base se construye sobre un profundo respeto por la artesanía y el deseo de conectar a los músicos con instrumentos que llevan un legado e inspiran nuevos.
             </p>
           </div>
           <div className="relative h-80 rounded-lg overflow-hidden shadow-2xl">
              <Image
                 src="https://picsum.photos/seed/guitar-workshop/600/400"
-                alt="OCTAVA workshop"
+                alt="Taller de OCTAVA"
                 data-ai-hint="guitar workshop"
                 fill
                 className="object-cover"
@@ -64,23 +64,23 @@ export default function Home() {
       <section id="philosophy" className="py-16 md:py-24 bg-secondary">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-headline font-bold">OUR PHILOSOPHY</h2>
+            <h2 className="text-3xl md:text-4xl font-headline font-bold">NUESTRA FILOSOFÍA</h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Our core principles guide everything we do, from sourcing instruments to serving our community.
+              Nuestros principios fundamentales guían todo lo que hacemos, desde la obtención de instrumentos hasta el servicio a nuestra comunidad.
             </p>
           </div>
           <div className="mt-12 grid md:grid-cols-3 gap-8 text-center">
             <div className="p-6">
-              <h3 className="text-2xl font-headline font-bold text-primary">Mission</h3>
-              <p className="mt-2 text-muted-foreground">To inspire and equip musicians with exceptional instruments that ignite their passion and elevate their art.</p>
+              <h3 className="text-2xl font-headline font-bold text-primary">Misión</h3>
+              <p className="mt-2 text-muted-foreground">Inspirar y equipar a los músicos con instrumentos excepcionales que enciendan su pasión y eleven su arte.</p>
             </div>
             <div className="p-6">
-              <h3 className="text-2xl font-headline font-bold text-primary">Vision</h3>
-              <p className="mt-2 text-muted-foreground">To be the premier destination for musicians seeking instruments of unparalleled quality and craftsmanship, fostering a vibrant community of artists.</p>
+              <h3 className="text-2xl font-headline font-bold text-primary">Visión</h3>
+              <p className="mt-2 text-muted-foreground">Ser el principal destino para los músicos que buscan instrumentos de calidad y artesanía inigualables, fomentando una vibrante comunidad de artistas.</p>
             </div>
             <div className="p-6">
-              <h3 className="text-2xl font-headline font-bold text-primary">Values</h3>
-              <p className="mt-2 text-muted-foreground">Passion, Craftsmanship, Community, Innovation, Legacy.</p>
+              <h3 className="text-2xl font-headline font-bold text-primary">Valores</h3>
+              <p className="mt-2 text-muted-foreground">Pasión, Artesanía, Comunidad, Innovación, Legado.</p>
             </div>
           </div>
         </div>
@@ -90,37 +90,37 @@ export default function Home() {
       <section id="value-proposition" className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">THE OCTAVA DIFFERENCE</h2>
+            <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">LA DIFERENCIA OCTAVA</h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              We offer more than just instruments. We offer an experience rooted in authenticity and expertise.
+              Ofrecemos más que solo instrumentos. Ofrecemos una experiencia arraigada en la autenticidad y la experiencia.
             </p>
           </div>
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card>
               <CardHeader className="flex flex-row items-center gap-4">
                 <Gem className="w-8 h-8 text-primary" />
-                <CardTitle>Curated Selection</CardTitle>
+                <CardTitle>Selección Curada</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Every instrument is hand-picked by our experts for its quality, history, and unique character.</p>
+                <p>Cada instrumento es seleccionado a mano por nuestros expertos por su calidad, historia y carácter único.</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center gap-4">
                 <ShieldCheck className="w-8 h-8 text-primary" />
-                <CardTitle>Expert Craftsmanship</CardTitle>
+                <CardTitle>Artesanía Experta</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Our in-house luthiers provide world-class repair, maintenance, and customization services.</p>
+                <p>Nuestros luthiers internos proporcionan servicios de reparación, mantenimiento y personalización de clase mundial.</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center gap-4">
                 <Users className="w-8 h-8 text-primary" />
-                <CardTitle>Vibrant Community</CardTitle>
+                <CardTitle>Comunidad Vibrante</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Join a network of passionate artists through our workshops, events, and online forums.</p>
+                <p>Únete a una red de artistas apasionados a través de nuestros talleres, eventos y foros en línea.</p>
               </CardContent>
             </Card>
           </div>
@@ -131,26 +131,26 @@ export default function Home() {
       <section id="community" className="py-16 md:py-24 bg-secondary">
         <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-headline font-bold">FOR THE DISCERNING ARTIST</h2>
+            <h2 className="text-3xl md:text-4xl font-headline font-bold">PARA EL ARTISTA EXIGENTE</h2>
             <div className="mt-6 space-y-4 text-lg text-muted-foreground">
               <div className="flex items-start gap-4">
                 <Target className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
-                <p><span className="font-bold text-foreground">Professional Musicians:</span> Seeking reliable, tour-ready vintage gear with unmatched tone.</p>
+                <p><span className="font-bold text-foreground">Músicos Profesionales:</span> Buscando equipo vintage fiable y listo para giras con un tono inigualable.</p>
               </div>
               <div className="flex items-start gap-4">
                  <Target className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
-                <p><span className="font-bold text-foreground">Serious Hobbyists:</span> Passionate players who appreciate the craftsmanship and history of iconic instruments.</p>
+                <p><span className="font-bold text-foreground">Aficionados Serios:</span> Apasionados que aprecian la artesanía y la historia de los instrumentos icónicos.</p>
               </div>
               <div className="flex items-start gap-4">
                  <Target className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
-                <p><span className="font-bold text-foreground">Collectors & Aficionados:</span> Investors and enthusiasts looking for rare and pristine pieces of music history.</p>
+                <p><span className="font-bold text-foreground">Coleccionistas y Aficionados:</span> Inversores y entusiastas que buscan piezas raras y prístinas de la historia de la música.</p>
               </div>
             </div>
           </div>
           <div className="relative aspect-video rounded-lg overflow-hidden shadow-2xl group">
             <Image
               src="https://picsum.photos/seed/stage-lights/1280/720"
-              alt="Live performance with vintage instruments"
+              alt="Actuación en vivo con instrumentos vintage"
               data-ai-hint="stage lights"
               fill
               className="object-cover"
@@ -158,7 +158,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
               <PlayCircle className="w-20 h-20 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300 cursor-pointer" />
             </div>
-            <div className="absolute bottom-4 left-4 text-white font-headline text-lg">OCTAVA Corporate Video</div>
+            <div className="absolute bottom-4 left-4 text-white font-headline text-lg">Vídeo Corporativo de OCTAVA</div>
           </div>
         </div>
       </section>
@@ -170,12 +170,12 @@ export default function Home() {
             <CardContent className="pt-6">
               <div className="flex flex-col items-center gap-4">
                 <BookOpen className="w-10 h-10 text-primary" />
-                <h3 className="text-2xl font-headline font-bold">Internal Resources</h3>
+                <h3 className="text-2xl font-headline font-bold">Recursos Internos</h3>
                 <p className="text-muted-foreground">
-                  Access detailed operational data and internal documents via the OCTAVA intranet.
+                  Accede a datos operativos detallados y documentos internos a través de la intranet de OCTAVA.
                 </p>
                 <Button asChild variant="link" className="text-primary text-lg">
-                  <Link href="/intranet">Go to Intranet Dashboard <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                  <Link href="/intranet">Ir al Panel de Intranet <ArrowRight className="ml-2 h-5 w-5" /></Link>
                 </Button>
               </div>
             </CardContent>
@@ -186,13 +186,13 @@ export default function Home() {
       {/* Final Message */}
       <section className="py-12 bg-secondary">
         <div className="container mx-auto px-4 text-center">
-            <h3 className="text-2xl font-headline font-bold">Your Legacy Awaits.</h3>
+            <h3 className="text-2xl font-headline font-bold">Tu Legado te Espera.</h3>
             <p className="mt-2 text-muted-foreground max-w-xl mx-auto">
-              Join the OCTAVA family and find the instrument that will define your sound.
+              Únete a la familia OCTAVA y encuentra el instrumento que definirá tu sonido.
             </p>
              <Button asChild className="mt-6" size="lg">
               <Link href="/products">
-                Find Your Instrument
+                Encuentra Tu Instrumento
               </Link>
             </Button>
         </div>

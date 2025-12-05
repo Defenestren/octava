@@ -7,12 +7,12 @@ import Footer from '@/components/layout/footer';
 
 export const metadata: Metadata = {
   title: {
-    default: 'OCTAVA | Premium Vintage Instruments',
+    default: 'OCTAVA | Instrumentos Vintage Premium',
     template: `%s | OCTAVA`,
   },
   description:
-    'OCTAVA is the premier destination for musicians seeking instruments of unparalleled quality and craftsmanship. Discover our collection of premium vintage rock instruments.',
-  keywords: ['vintage guitars', 'rock instruments', 'premium instruments', 'OCTAVA'],
+    'OCTAVA es el destino principal para músicos que buscan instrumentos de calidad y artesanía inigualables. Descubre nuestra colección de instrumentos de rock vintage premium.',
+  keywords: ['guitarras vintage', 'instrumentos de rock', 'instrumentos premium', 'OCTAVA'],
 };
 
 export default function RootLayout({
@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="es" className="dark">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

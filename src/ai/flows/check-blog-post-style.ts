@@ -14,7 +14,7 @@ import {z} from 'genkit';
 const BlogPostStyleInputSchema = z.object({
   blogPostContent: z
     .string()
-    .describe('The content of the blog post to be checked against brand guidelines.'),
+    .describe('El contenido del post del blog para ser verificado con las directrices de la marca.'),
 });
 export type BlogPostStyleInput = z.infer<typeof BlogPostStyleInputSchema>;
 
@@ -22,12 +22,12 @@ const BlogPostStyleOutputSchema = z.object({
   adherenceScore: z
     .number()
     .describe(
-      'A score (0-100) indicating how well the blog post adheres to the brand guidelines.'
+      'Una puntuación (0-100) que indica cómo de bien se adhiere el post a las directrices de la marca.'
     ),
   suggestions: z
     .string()
     .describe(
-      'Specific suggestions for improving the blog post to better align with the brand guidelines.'
+      'Sugerencias específicas para mejorar la publicación del blog y alinearla mejor con las directrices de la marca.'
     ),
 });
 export type BlogPostStyleOutput = z.infer<typeof BlogPostStyleOutputSchema>;
@@ -42,22 +42,22 @@ const prompt = ai.definePrompt({
   name: 'checkBlogPostStylePrompt',
   input: {schema: BlogPostStyleInputSchema},
   output: {schema: BlogPostStyleOutputSchema},
-  prompt: `You are an expert content style checker for OCTAVA, a premium vintage rock instrument store. Use the provided blog post content to evaluate and score how well it adheres to the brand guidelines.
+  prompt: `Eres un experto corrector de estilo de contenido para OCTAVA, una tienda premium de instrumentos de rock vintage. Utiliza el contenido del post proporcionado para evaluar y puntuar cómo de bien se adhiere a las directrices de la marca.
 
-Brand guidelines:
-- Tone: Rock vintage premium, sober, elegant, and authentic.
-- Colors: #1F1F1F (carbon black), #B2874D (wood gold), #FFFFFF (white).
-- Typography: Rubik (headlines), Roboto (body).
+Directrices de la marca:
+- Tono: Rock vintage premium, sobrio, elegante y auténtico.
+- Colores: #1F1F1F (negro carbón), #B2874D (oro madera), #FFFFFF (blanco).
+- Tipografía: Rubik (titulares), Roboto (cuerpo).
 
-Blog Post Content: {{{blogPostContent}}}
+Contenido del Post: {{{blogPostContent}}}
 
-Provide a score (0-100) in the adherenceScore field indicating how well the content adheres to the brand guidelines and suggest concrete improvements.
-Here is a summary:
-- Mission: To inspire and equip musicians with exceptional instruments that ignite their passion and elevate their art.
-- Vision: To be the premier destination for musicians seeking instruments of unparalleled quality and craftsmanship, fostering a vibrant community of artists.
-- Values: Passion, Craftsmanship, Community, Innovation, Legacy.
+Proporciona una puntuación (0-100) en el campo adherenceScore que indique cómo de bien se adhiere el contenido a las directrices de la marca y sugiere mejoras concretas.
+Aquí tienes un resumen:
+- Misión: Inspirar y equipar a los músicos con instrumentos excepcionales que enciendan su pasión y eleven su arte.
+- Visión: Ser el principal destino para los músicos que buscan instrumentos de calidad y artesanía inigualables, fomentando una vibrante comunidad de artistas.
+- Valores: Pasión, Artesanía, Comunidad, Innovación, Legado.
 
-Respond in JSON format.
+Responde en formato JSON.
 `,
 });
 
