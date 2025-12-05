@@ -149,7 +149,7 @@ export default function Home() {
           </div>
           <div className="relative aspect-video rounded-lg overflow-hidden shadow-2xl group">
             <video
-              src="https://storage.googleapis.com/static-firebase-studio-app/octava-video.mp4"
+              src="/mi-video.mp4"
               autoPlay
               loop
               muted
