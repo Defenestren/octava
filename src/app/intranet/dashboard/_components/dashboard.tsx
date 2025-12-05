@@ -97,7 +97,7 @@ export default function Dashboard() {
             const date = new Date(1900, 0, sale.fecha_venta - 1);
             const monthIndex = date.getMonth();
             const monthName = date.toLocaleString('es-ES', { month: 'long' });
-            const monthKey = `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)}`;
+            const monthKey = `${String(monthIndex + 1).padStart(2, '0')}-${monthName.charAt(0).toUpperCase()}${monthName.slice(1)}`;
     
             const revenue = sale.cantidad * sale.precio_unidad_final;
             const officialRevenue = sale.cantidad * sale.precio_unidad_oficial;
@@ -111,7 +111,7 @@ export default function Dashboard() {
             }
     
             if (!monthlySales[monthKey]) {
-                monthlySales[monthKey] = { month: monthKey, revenue: 0, monthIndex };
+                monthlySales[monthKey] = { month: `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)}`, revenue: 0, monthIndex };
             }
             monthlySales[monthKey].revenue += revenue;
         });
@@ -231,7 +231,7 @@ export default function Dashboard() {
             const monthIndex = signupDate.getMonth();
             const year = signupDate.getFullYear();
             const monthName = signupDate.toLocaleString('es-ES', { month: 'long' });
-            const monthKey = `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)} ${year}`;
+            const monthKey = `${year}-${String(monthIndex + 1).padStart(2, '0')}`;
             
             if (!monthlyData[monthKey]) {
                 monthlyData[monthKey] = { month: `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)}`, monthIndex, year, nuevos: 0, recurrentes: 0 };
@@ -521,10 +521,6 @@ export default function Dashboard() {
                         }
                     }
                 };
-
-                // This part is now mostly redundant as processing functions are called directly
-                // but left for any potential future sheets that don't have custom processing
-                // parseSheet(sheetNames.suppliers, setSuppliersData, kpiSheetNames.suppliers, setSuppliersKpis);
 
                 toast({ title: 'Datos cargados', description: 'El dashboard ha sido actualizado con el archivo Excel.' });
             } catch (error) {
