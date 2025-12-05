@@ -91,41 +91,48 @@ export default function Dashboard() {
         const monthlySales = {};
         let totalRevenue = 0;
         let totalSales = 0;
+        let totalOfficialPrice = 0;
         let totalDiscount = 0;
-
+    
         data.forEach(sale => {
+            // Excel dates are numbers. We need to convert them to JS dates.
+            // new Date(1900, 0, sale.fecha_venta - 1) is a common way to do it.
             const date = new Date(1900, 0, sale.fecha_venta - 1);
-            const month = date.toLocaleString('es-ES', { month: 'long' });
-            const monthKey = `${month.charAt(0).toUpperCase()}${month.slice(1)}`;
-
+            const monthIndex = date.getMonth();
+            const monthName = date.toLocaleString('es-ES', { month: 'long' });
+            const monthKey = `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)}`;
+    
             const revenue = sale.cantidad * sale.precio_unidad_final;
+            const officialRevenue = sale.cantidad * sale.precio_unidad_oficial;
+
             totalRevenue += revenue;
             totalSales += sale.cantidad;
-            if (sale.descuento_aplicado && sale.descuento_aplicado > 0) {
-                 totalDiscount += sale.cantidad * (sale.precio_unidad_oficial - sale.precio_unidad_final);
+            totalOfficialPrice += officialRevenue;
+            
+            if (sale.descuento_aplicado && parseFloat(sale.descuento_aplicado) > 0) {
+                 totalDiscount += officialRevenue - revenue;
             }
-
+    
             if (!monthlySales[monthKey]) {
-                monthlySales[monthKey] = { month: monthKey, revenue: 0 };
+                monthlySales[monthKey] = { month: monthKey, revenue: 0, monthIndex };
             }
             monthlySales[monthKey].revenue += revenue;
         });
-
-        const chartData = Object.values(monthlySales);
+    
+        const chartData = Object.values(monthlySales).sort((a, b) => a.monthIndex - b.monthIndex);
         setSalesData(chartData);
 
-        const totalOfficialPrice = data.reduce((acc, sale) => acc + (sale.cantidad * sale.precio_unidad_oficial), 0);
         const avgSalePrice = totalSales > 0 ? totalRevenue / totalSales : 0;
         const discountRate = totalOfficialPrice > 0 ? (totalDiscount / totalOfficialPrice) * 100 : 0;
-
+    
         setSalesKpis({
             totalRevenue: `€${totalRevenue.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
             totalSales: totalSales.toLocaleString('es-ES'),
             avgSalePrice: `€${avgSalePrice.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
             discountRate: `${discountRate.toFixed(1)}%`,
-            revenueChange: salesKpis.revenueChange, // Not enough info in excel to calculate change
-            salesChange: salesKpis.salesChange, // Not enough info in excel to calculate change
-            avgSalePriceChange: salesKpis.avgSalePriceChange // Not enough info in excel to calculate change
+            revenueChange: 'N/A',
+            salesChange: 'N/A',
+            avgSalePriceChange: 'N/A'
         });
     };
 
