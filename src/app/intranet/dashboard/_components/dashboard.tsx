@@ -37,7 +37,7 @@ const CustomTooltip = ({ active, payload, label }) => {
           {payload.map((entry, index) => (
               <p key={`item-${index}`} style={{ color: entry.color }}>
                   {`${entry.name}: ${
-                    typeof entry.value === 'number' && entry.name !== 'Stock' && entry.name !== 'Interacciones' && entry.name !== 'Empleados' && entry.name !== 'Proveedores' && entry.name !== 'Nuevos' && entry.name !== 'Recurrentes'
+                    typeof entry.value === 'number' && entry.name !== 'Stock' && entry.name !== 'Interacciones' && entry.name !== 'Empleados' && entry.name !== 'Proveedores' && entry.name !== 'Nuevos' && entry.name !== 'Recurrentes' && entry.name !== 'count'
                     ? entry.value.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }) 
                     : entry.value
                   }`}
@@ -275,6 +275,51 @@ export default function Dashboard() {
         });
     };
 
+    const processEmployeesData = (data) => {
+        const departmentCounts = {};
+        const instrumentCounts = {};
+        let totalSalary = 0;
+        let musicianCount = 0;
+
+        data.forEach(employee => {
+            const department = employee.departamento;
+            if (department) {
+                departmentCounts[department] = (departmentCounts[department] || 0) + 1;
+            }
+
+            totalSalary += employee.salario_base_anual || 0;
+
+            if (employee.es_musico && (String(employee.es_musico).toLowerCase() === 'si' || String(employee.es_musico).toLowerCase() === 'sí' || employee.es_musico === true)) {
+                musicianCount++;
+                const instrument = employee.instrumento_toca;
+                if (instrument) {
+                    instrumentCounts[instrument] = (instrumentCounts[instrument] || 0) + 1;
+                }
+            }
+        });
+        
+        const chartData = Object.entries(departmentCounts).map(([department, count]) => ({
+            department,
+            count
+        }));
+        setEmployeesData(chartData);
+
+        const totalEmployees = data.length;
+        const avgMonthlySalary = totalEmployees > 0 ? (totalSalary / 12) / totalEmployees : 0;
+        const musicianRatio = totalEmployees > 0 ? (musicianCount / totalEmployees) * 100 : 0;
+        
+        const topInstrument = Object.keys(instrumentCounts).length > 0
+            ? Object.entries(instrumentCounts).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+            : 'N/A';
+        
+        setEmployeesKpis({
+            totalEmployees: totalEmployees.toLocaleString('es-ES'),
+            avgSalary: `€${avgMonthlySalary.toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+            musicianRatio: `${musicianRatio.toFixed(0)}%`,
+            topInstrument: topInstrument
+        });
+    };
+
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -321,17 +366,32 @@ export default function Dashboard() {
                 } else {
                     toast({ title: `La hoja "${sheetNames.clients}" no existe`, variant: 'destructive' });
                 }
+                 
+                // Process Employees sheet
+                const employeesSheet = workbook.Sheets[sheetNames.employees];
+                if (employeesSheet) {
+                    const employeesJson = XLSX.utils.sheet_to_json(employeesSheet);
+                    processEmployeesData(employeesJson);
+                } else {
+                    toast({ title: `La hoja "${sheetNames.employees}" no existe`, variant: 'destructive' });
+                }
+
 
                 const parseSheet = (sheetName, setter, kpiSheetName, kpiSetter) => {
                     const worksheet = workbook.Sheets[sheetName];
                     if (worksheet) {
                         const jsonData = XLSX.utils.sheet_to_json(worksheet);
-                        setter(jsonData);
+                        if (sheetName === sheetNames.employees) {
+                           // Already processed
+                        } else {
+                            setter(jsonData);
+                        }
                     } else if (
                         sheetName !== sheetNames.sales && 
                         sheetName !== sheetNames.products &&
                         sheetName !== sheetNames.marketing &&
-                        sheetName !== sheetNames.clients
+                        sheetName !== sheetNames.clients &&
+                        sheetName !== sheetNames.employees
                         ) {
                         toast({ title: `La hoja "${sheetName}" no existe`, variant: 'destructive' });
                     }
@@ -343,12 +403,12 @@ export default function Dashboard() {
                              const kpis = Object.fromEntries(kpiJson.slice(1).map(row => [row[0], row[1]]));
                              kpiSetter(kpis);
                         } else {
-                            toast({ title: `La hoja "${kpiSheetName}" no existe`, variant: 'destructive' });
+                            // toast({ title: `La hoja "${kpiSheetName}" no existe`, variant: 'destructive' });
                         }
                     }
                 };
 
-                parseSheet(sheetNames.employees, setEmployeesData, kpiSheetNames.employees, setEmployeesKpis);
+                // parseSheet(sheetNames.employees, setEmployeesData, kpiSheetNames.employees, setEmployeesKpis);
                 parseSheet(sheetNames.expenses, setExpensesData, kpiSheetNames.expenses, setExpensesKpis);
                 parseSheet(sheetNames.suppliers, setSuppliersData, kpiSheetNames.suppliers, setSuppliersKpis);
 
@@ -593,3 +653,4 @@ export default function Dashboard() {
 }
 
     
+
