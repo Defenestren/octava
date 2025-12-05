@@ -36,7 +36,7 @@ const CustomTooltip = ({ active, payload, label }) => {
           <p className="label font-bold text-foreground">{`${label}`}</p>
           {payload.map((entry, index) => (
               <p key={`item-${index}`} style={{ color: entry.color }}>
-                  {`${entry.name}: ${entry.value.toLocaleString('es-ES')}`}
+                  {`${entry.name}: ${entry.value.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}`}
               </p>
           ))}
         </div>
@@ -56,8 +56,8 @@ const sheetNames = {
     suppliers: 'Proveedores',
 };
 
+// No longer need kpiSheetNames as they are calculated
 const kpiSheetNames = {
-    sales: 'KPIs Ventas',
     products: 'KPIs Productos',
     marketing: 'KPIs Marketing',
     clients: 'KPIs Clientes',
@@ -87,6 +87,48 @@ export default function Dashboard() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { toast } = useToast();
 
+    const processSalesData = (data) => {
+        const monthlySales = {};
+        let totalRevenue = 0;
+        let totalSales = 0;
+        let totalDiscount = 0;
+
+        data.forEach(sale => {
+            const date = new Date(1900, 0, sale.fecha_venta - 1);
+            const month = date.toLocaleString('es-ES', { month: 'long' });
+            const monthKey = `${month.charAt(0).toUpperCase()}${month.slice(1)}`;
+
+            const revenue = sale.cantidad * sale.precio_unidad_final;
+            totalRevenue += revenue;
+            totalSales += sale.cantidad;
+            if (sale.descuento_aplicado && sale.descuento_aplicado > 0) {
+                 totalDiscount += sale.cantidad * (sale.precio_unidad_oficial - sale.precio_unidad_final);
+            }
+
+            if (!monthlySales[monthKey]) {
+                monthlySales[monthKey] = { month: monthKey, revenue: 0 };
+            }
+            monthlySales[monthKey].revenue += revenue;
+        });
+
+        const chartData = Object.values(monthlySales);
+        setSalesData(chartData);
+
+        const totalOfficialPrice = data.reduce((acc, sale) => acc + (sale.cantidad * sale.precio_unidad_oficial), 0);
+        const avgSalePrice = totalSales > 0 ? totalRevenue / totalSales : 0;
+        const discountRate = totalOfficialPrice > 0 ? (totalDiscount / totalOfficialPrice) * 100 : 0;
+
+        setSalesKpis({
+            totalRevenue: `€${totalRevenue.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+            totalSales: totalSales.toLocaleString('es-ES'),
+            avgSalePrice: `€${avgSalePrice.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+            discountRate: `${discountRate.toFixed(1)}%`,
+            revenueChange: salesKpis.revenueChange, // Not enough info in excel to calculate change
+            salesChange: salesKpis.salesChange, // Not enough info in excel to calculate change
+            avgSalePriceChange: salesKpis.avgSalePriceChange // Not enough info in excel to calculate change
+        });
+    };
+
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -98,26 +140,36 @@ export default function Dashboard() {
                 const data = e.target?.result;
                 const workbook = XLSX.read(data, { type: 'binary' });
 
+                // Process Sales sheet
+                const salesSheet = workbook.Sheets[sheetNames.sales];
+                if (salesSheet) {
+                    const salesJson = XLSX.utils.sheet_to_json(salesSheet);
+                    processSalesData(salesJson);
+                } else {
+                     toast({ title: `La hoja "${sheetNames.sales}" no existe`, variant: 'destructive' });
+                }
+
                 const parseSheet = (sheetName, setter, kpiSheetName, kpiSetter) => {
                     const worksheet = workbook.Sheets[sheetName];
                     if (worksheet) {
                         const jsonData = XLSX.utils.sheet_to_json(worksheet);
                         setter(jsonData);
-                    } else {
+                    } else if (sheetName !== sheetNames.sales) { // Avoid double toast for sales
                         toast({ title: `La hoja "${sheetName}" no existe`, variant: 'destructive' });
                     }
                     
-                    const kpiWorksheet = workbook.Sheets[kpiSheetName];
-                    if (kpiWorksheet) {
-                         const kpiJson = XLSX.utils.sheet_to_json(kpiWorksheet, { header: 1 });
-                         const kpis = Object.fromEntries(kpiJson.slice(1).map(row => [row[0], row[1]]));
-                         kpiSetter(kpis);
-                    } else {
-                        toast({ title: `La hoja "${kpiSheetName}" no existe`, variant: 'destructive' });
+                    if (kpiSheetName) {
+                        const kpiWorksheet = workbook.Sheets[kpiSheetName];
+                        if (kpiWorksheet) {
+                             const kpiJson = XLSX.utils.sheet_to_json(kpiWorksheet, { header: 1 });
+                             const kpis = Object.fromEntries(kpiJson.slice(1).map(row => [row[0], row[1]]));
+                             kpiSetter(kpis);
+                        } else {
+                            toast({ title: `La hoja "${kpiSheetName}" no existe`, variant: 'destructive' });
+                        }
                     }
                 };
 
-                parseSheet(sheetNames.sales, setSalesData, kpiSheetNames.sales, setSalesKpis);
                 parseSheet(sheetNames.products, setProductsData, kpiSheetNames.products, setProductsKpis);
                 parseSheet(sheetNames.marketing, setMarketingData, kpiSheetNames.marketing, setMarketingKpis);
                 parseSheet(sheetNames.clients, setClientsData, kpiSheetNames.clients, setClientsKpis);
@@ -170,10 +222,10 @@ export default function Dashboard() {
             <TabsContent value="sales">
                 <div className="space-y-4">
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                        <KpiCard title="Ingresos Totales" value={salesKpis.totalRevenue} change={salesKpis.revenueChange + " vs mes anterior"} />
-                        <KpiCard title="Ventas Totales" value={salesKpis.totalSales} change={salesKpis.salesChange + " vs mes anterior"} />
-                        <KpiCard title="Precio Medio Venta" value={salesKpis.avgSalePrice} change={salesKpis.avgSalePriceChange + " vs mes anterior"} />
-                        <KpiCard title="Tasa de Descuento" value={`${salesKpis.discountRate}%`} />
+                        <KpiCard title="Ingresos Totales" value={salesKpis.totalRevenue} change={salesKpis.revenueChange} />
+                        <KpiCard title="Ventas Totales" value={salesKpis.totalSales} change={salesKpis.salesChange} />
+                        <KpiCard title="Precio Medio Venta" value={salesKpis.avgSalePrice} change={salesKpis.avgSalePriceChange} />
+                        <KpiCard title="Tasa de Descuento" value={`${salesKpis.discountRate}`} />
                     </div>
                     <Card>
                         <CardHeader>
@@ -185,7 +237,7 @@ export default function Dashboard() {
                                 <BarChart data={salesData}>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                                     <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
-                                    <YAxis stroke="hsl(var(--muted-foreground))" tickFormatter={(value) => `€${value / 1000}k`} />
+                                    <YAxis stroke="hsl(var(--muted-foreground))" tickFormatter={(value) => `€${typeof value === 'number' ? value / 1000 : 0}k`} />
                                     <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--accent))' }} />
                                     <Bar dataKey="revenue" name="Ingresos" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                                 </BarChart>
