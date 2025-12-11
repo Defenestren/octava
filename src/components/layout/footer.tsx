@@ -22,7 +22,6 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-2 md:mb-0">
             <Image src="/logo_octava_60x40.svg" alt="Octava Logo" width={60} height={40} className="h-8 w-auto" />
-            <span className="font-bold font-headline text-xl">OCTAVA</span>
           </div>
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-1 mb-2 md:mb-0">
             {navLinks.map(({ href, label }) => (

@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, Music } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { OctavaLogo } from '@/components/icons';
 import Image from 'next/image';
 
 const navLinks = [
@@ -27,9 +26,6 @@ export default function Header() {
         <div className="mr-4 flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Image src="/logo_octava_60x40.svg" alt="Octava Logo" width={60} height={40} className="h-10 w-auto" />
-            <span className="font-bold font-headline text-lg hidden sm:inline-block">
-              OCTAVA
-            </span>
           </Link>
         </div>
 
