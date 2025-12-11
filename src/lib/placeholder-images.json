@@ -50,9 +50,9 @@
     },
     {
       "id": "services-banner",
-      "description": "Luthier building a guitar.",
-      "imageUrl": "/close-up-of-carpenter-building-a-guitar.webp",
-      "imageHint": "luthier building guitar"
+      "description": "Luthier making a guitar",
+      "imageUrl": "/haut-fabrication-luthier-de-guitare.webp",
+      "imageHint": "luthier guitar"
     },
     {
       "id": "contact-banner",
