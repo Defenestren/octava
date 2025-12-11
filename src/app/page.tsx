@@ -67,7 +67,7 @@ export default function Home() {
           </div>
           <div className="relative h-80 rounded-lg overflow-hidden shadow-2xl">
              <Image
-                src="https://storage.googleapis.com/source-buckets/user-uploads/1721152063829-05_Imagen%20Corporativa%20Equipo%20OCTAVA.png"
+                src="/equipo-octava.png"
                 alt="El equipo de OCTAVA"
                 data-ai-hint="music band portrait"
                 fill
