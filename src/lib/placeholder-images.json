@@ -50,9 +50,9 @@
     },
     {
       "id": "services-banner",
-      "description": "Close up on guitar strings being cleaned.",
-      "imageUrl": "https://images.unsplash.com/photo-1573722333702-cbf272a7a3d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxndWl0YXIlMjBtYWludGVuYW5jZXxlbnwwfHx8fDE3NjQ5Mzg1NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "guitar maintenance"
+      "description": "Luthier building a guitar.",
+      "imageUrl": "/close-up-of-carpenter-building-a-guitar.webp",
+      "imageHint": "luthier building guitar"
     },
     {
       "id": "contact-banner",
