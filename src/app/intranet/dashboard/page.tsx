@@ -15,7 +15,7 @@ export default function DashboardPage() {
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover -z-10 brightness-50"
       >
-        <source src="/mi-video.mp4" type="video/mp4" />
+        <source src="/3345545-hd_1920_1080_25fps.mp4" type="video/mp4" />
         Tu navegador no soporta el tag de vídeo.
       </video>
       <div className="relative z-10 container mx-auto p-4 md:p-8">
