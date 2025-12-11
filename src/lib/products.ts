@@ -101,7 +101,7 @@ export const products: Product[] = [
         category: 'Pedales',
         price: 180.00,
         description: 'El pedal de overdrive verde más famoso de la historia. Perfecto para empujar tu ampli a una saturación cálida y cremosa.',
-        image: defaultPedalImage,
+        image: { id: 'prod_img_006', description: 'Pedal de Overdrive Ibanez', imageUrl: '/s-l500.webp', imageHint: 'ibanez pedal' },
         stock: 30,
         specs: {
             'Tipo de efecto': 'Overdrive',
