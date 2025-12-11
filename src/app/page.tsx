@@ -15,13 +15,8 @@ export default function Home() {
 
   const handlePlay = () => {
     if (videoRef.current) {
-      if (videoRef.current.paused) {
         videoRef.current.play();
         setIsPlaying(true);
-      } else {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      }
     }
   };
 
@@ -174,10 +169,7 @@ export default function Home() {
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 onEnded={() => setIsPlaying(false)}
-                onClick={(e) => {
-                    // Prevent click from triggering handlePlay when controls are visible
-                    if (isPlaying) e.stopPropagation();
-                }}
+                onClick={() => !isPlaying && handlePlay()}
             />
             {!isPlaying && (
                 <div 
@@ -213,7 +205,7 @@ export default function Home() {
       </section>
 
       {/* Final Message */}
-      <section className="py-12 bg-secondary">
+      <section className="py-12 bg-background">
         <div className="container mx-auto px-4 text-center">
             <h3 className="text-2xl font-headline font-bold">Tu Legado te Espera.</h3>
             <p className="mt-2 text-muted-foreground max-w-xl mx-auto">
