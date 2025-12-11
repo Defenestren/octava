@@ -21,7 +21,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-2">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-2 md:mb-0">
-            <Image src="/7-23.png" alt="Octava Logo" width={320} height={200} className="h-20 w-auto" />
+            <Image src="/7-23.png" alt="Octava Logo" width={160} height={100} className="h-20 w-auto" />
           </div>
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-1 mb-2 md:mb-0">
             {navLinks.map(({ href, label }) => (

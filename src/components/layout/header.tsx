@@ -25,7 +25,7 @@ export default function Header() {
       <div className="container flex h-24 items-center">
         <div className="mr-4 flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Image src="/7-23.png" alt="Octava Logo" width={320} height={200} className="h-20 w-auto" />
+            <Image src="/7-23.png" alt="Octava Logo" width={160} height={100} className="h-20 w-auto" />
           </Link>
         </div>
 
@@ -41,7 +41,7 @@ export default function Header() {
             >
               <span className="relative z-10">{label}</span>
               {pathname !== href && (
-                <span className="absolute inset-0 z-0 h-full w-full rounded-md bg-primary/20 scale-x-0 transform origin-right transition-transform duration-300 ease-in-out group-hover:scale-x-100 group-hover:origin-left"></span>
+                <span className="absolute inset-0 z-0 h-full w-full rounded-md bg-transparent scale-x-0 transform origin-right transition-transform duration-300 ease-in-out group-hover:bg-primary/20 group-hover:scale-x-100 group-hover:origin-left"></span>
               )}
             </Link>
           ))}
@@ -59,7 +59,7 @@ export default function Header() {
               <SheetContent side="left">
                 <div className="flex flex-col space-y-4 p-4">
                   <Link href="/" className="mb-4 flex items-center space-x-2">
-                    <Image src="/7-23.png" alt="Octava Logo" width={320} height={200} className="h-20 w-auto" />
+                    <Image src="/7-23.png" alt="Octava Logo" width={160} height={100} className="h-20 w-auto" />
                   </Link>
                   {navLinks.map(({ href, label }) => (
                     <Link
