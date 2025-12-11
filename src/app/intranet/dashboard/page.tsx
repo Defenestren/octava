@@ -7,12 +7,24 @@ export const metadata = {
 
 export default function DashboardPage() {
   return (
-    <div className="container mx-auto p-4 md:p-8">
-      <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-headline font-bold">Mini Cuadro de Mando</h1>
-        <p className="text-muted-foreground mt-2">Indicadores clave por departamento.</p>
+    <div className="relative min-h-screen">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover -z-10 brightness-50"
+      >
+        <source src="/mi-video.mp4" type="video/mp4" />
+        Tu navegador no soporta el tag de vídeo.
+      </video>
+      <div className="relative z-10 container mx-auto p-4 md:p-8">
+        <div className="mb-8 text-white">
+          <h1 className="text-3xl md:text-4xl font-headline font-bold text-shadow-lg">Mini Cuadro de Mando</h1>
+          <p className="text-gray-200 mt-2">Indicadores clave por departamento.</p>
+        </div>
+        <Dashboard />
       </div>
-      <Dashboard />
     </div>
   );
 }
