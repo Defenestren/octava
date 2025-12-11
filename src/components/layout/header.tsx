@@ -29,17 +29,20 @@ export default function Header() {
           </Link>
         </div>
 
-        <nav className="hidden md:flex flex-1 items-center space-x-6 text-sm font-medium">
+        <nav className="hidden md:flex flex-1 items-center space-x-1 text-sm font-medium">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               className={cn(
-                'transition-colors hover:text-primary',
-                pathname === href ? 'text-primary' : 'text-foreground/60'
+                'relative px-3 py-2 transition-colors duration-300',
+                pathname === href ? 'text-primary' : 'text-foreground/60 hover:text-foreground'
               )}
             >
-              {label}
+              <span className="relative z-10">{label}</span>
+              {pathname !== href && (
+                <span className="absolute inset-0 z-0 h-full w-full rounded-md bg-primary/20 scale-x-0 transform origin-right transition-transform duration-300 ease-in-out group-hover:scale-x-100 group-hover:origin-left"></span>
+              )}
             </Link>
           ))}
         </nav>
