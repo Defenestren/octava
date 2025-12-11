@@ -86,7 +86,7 @@ export const products: Product[] = [
         category: 'Amplificadores',
         price: 2200.00,
         description: 'El rugido del rock de los 80. Un cabezal de un solo canal que ofrece la distorsión más pura y agresiva.',
-        image: { id: 'prod_img_005', description: 'Cabezal de amplificador Marshall', imageUrl: 'https://picsum.photos/seed/marshall-amp/600/600', imageHint: 'marshall amplifier' },
+        image: { id: 'prod_img_005', description: 'Cabezal de amplificador Marshall', imageUrl: '/2-1200x1200.webp', imageHint: 'marshall amplifier' },
         stock: 7,
         specs: {
             'Potencia': '100W',
