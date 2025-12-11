@@ -116,7 +116,7 @@ export const products: Product[] = [
         category: 'Bajos',
         price: 2600.00,
         description: 'Un sonido de bajo distintivo con agudos penetrantes y graves sólidos. Famoso en el rock progresivo y el post-punk.',
-        image: { id: 'prod_img_007', description: 'Bajo Rickenbacker', imageUrl: 'https://picsum.photos/seed/rickenbacker-bass/600/600', imageHint: 'rickenbacker bass' },
+        image: { id: 'prod_img_007', description: 'Bajo Rickenbacker 4003', imageUrl: '/rickenbacker-4003sw-natural-walnut-xl.webp', imageHint: 'rickenbacker bass' },
         stock: 5,
         specs: {
             'Tipo de pastillas': 'Single-Coil',
