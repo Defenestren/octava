@@ -67,7 +67,7 @@ export default function Home() {
           </div>
           <div className="relative h-80 rounded-lg overflow-hidden shadow-2xl">
              <Image
-                src="https://storage.googleapis.com/source-buckets/user-uploads/1718919656515-octava-team.png"
+                src="https://storage.googleapis.com/source-buckets/user-uploads/1720616117521-octava-team.png"
                 alt="El equipo de OCTAVA"
                 data-ai-hint="music band portrait"
                 fill
@@ -164,24 +164,29 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="relative aspect-video rounded-lg overflow-hidden shadow-2xl group cursor-pointer" onClick={handlePlay}>
-            <video
-              ref={videoRef}
-              src="/mi-video.mp4"
-              playsInline
-              controls={isPlaying}
-              className="object-cover w-full h-full"
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              onEnded={() => setIsPlaying(false)}
+          <div className="relative aspect-video rounded-lg overflow-hidden shadow-2xl group">
+             <video
+                ref={videoRef}
+                src="/mi-video.mp4"
+                playsInline
+                controls={isPlaying}
+                className="w-full h-full object-cover"
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                onEnded={() => setIsPlaying(false)}
+                onClick={(e) => {
+                    // Prevent click from triggering handlePlay when controls are visible
+                    if (isPlaying) e.stopPropagation();
+                }}
             />
             {!isPlaying && (
-              <>
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center pointer-events-none">
-                  <PlayCircle className="w-20 h-20 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
+                <div 
+                    className="absolute inset-0 bg-black/40 flex items-center justify-center cursor-pointer"
+                    onClick={handlePlay}
+                >
+                    <PlayCircle className="w-20 h-20 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
+                    <div className="absolute bottom-4 left-4 text-white font-headline text-lg pointer-events-none">Vídeo Corporativo de OCTAVA</div>
                 </div>
-                <div className="absolute bottom-4 left-4 text-white font-headline text-lg pointer-events-none">Vídeo Corporativo de OCTAVA</div>
-              </>
             )}
           </div>
         </div>
