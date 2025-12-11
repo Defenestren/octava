@@ -2,8 +2,8 @@
   "placeholderImages": [
     {
       "id": "hero-image",
-      "description": "Octava Logo",
-      "imageUrl": "/photo-1606339279668-e7ef2b1bd53b.webp",
+      "description": "Un hombre tocando la guitarra en un escenario",
+      "imageUrl": "/one-man-playing-guitar-plucking-strings-performing-rock-music-generated-by-ai-free-photo.webp",
       "imageHint": "electric guitar stage"
     },
     {
@@ -50,7 +50,7 @@
     },
     {
       "id": "services-banner",
-      "description": "Luthier making a guitar",
+      "description": "Luthier haciendo una guitarra",
       "imageUrl": "/haut-fabrication-luthier-de-guitare.webp",
       "imageHint": "luthier guitar"
     },
