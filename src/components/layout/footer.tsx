@@ -18,7 +18,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="bg-secondary">
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
             <OctavaLogo className="h-10 w-auto text-primary" />
@@ -40,7 +40,7 @@ export default function Footer() {
             ))}
           </div>
         </div>
-        <div className="mt-6 pt-6 border-t border-border text-center text-sm text-muted-foreground">
+        <div className="mt-4 pt-4 border-t border-border text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} OCTAVA Instruments. All Rights Reserved.</p>
         </div>
       </div>
