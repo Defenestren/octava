@@ -13,7 +13,7 @@ export default function DashboardPage() {
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover -z-10 brightness-50"
+        className="absolute top-0 left-0 w-full h-full object-cover -z-10 brightness-50 blur-sm"
       >
         <source src="/3345545-hd_1920_1080_25fps.mp4" type="video/mp4" />
         Tu navegador no soporta el tag de vídeo.
