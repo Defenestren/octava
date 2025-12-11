@@ -68,8 +68,8 @@ export default function Home() {
           </div>
           <div className="relative h-80 rounded-lg overflow-hidden shadow-2xl">
              <Image
-                src="/close-up-of-carpenter-building-a-guitar.webp"
-                alt="Luthier construyendo una guitarra"
+                src="https://picsum.photos/seed/luthier/800/600"
+                alt="Luthier trabajando en una guitarra"
                 data-ai-hint="luthier working"
                 fill
                 className="object-cover"
@@ -232,6 +232,7 @@ export default function Home() {
     
 
     
+
 
 
 
