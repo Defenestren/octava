@@ -131,7 +131,7 @@ export const products: Product[] = [
         category: 'Guitarras',
         price: 3500.00,
         description: 'La dreadnought por excelencia. Un estándar en la música folk, bluegrass y country con un tono rico y potente.',
-        image: { id: 'prod_img_008', description: 'Guitarra acústica', imageUrl: 'https://picsum.photos/seed/acoustic-guitar/600/600', imageHint: 'acoustic guitar' },
+        image: { id: 'prod_img_d28', description: 'Guitarra Acústica D-28', imageUrl: '/card_d-28-marquis_f.jpg', imageHint: 'acoustic guitar' },
         stock: 9,
         specs: {
             'Tipo': 'Acústica (Dreadnought)',
