@@ -41,7 +41,7 @@ export const products: Product[] = [
         category: 'Guitarras',
         price: 2800.00,
         description: 'El sonido icónico del rock. Tono grueso, sustain infinito y una estética que nunca pasa de moda.',
-        image: { id: 'prod_img_002', description: 'Guitarra tipo LP', imageUrl: 'https://picsum.photos/seed/gibson-lp/600/600', imageHint: 'les paul guitar' },
+        image: { id: 'prod_img_002', description: 'Guitarra tipo LP', imageUrl: '/gibson-les-paul-standard-50s-tobacco-burst.webp', imageHint: 'les paul guitar' },
         stock: 8,
         specs: {
             'Tipo de pastillas': 'Humbucker BurstBucker',
