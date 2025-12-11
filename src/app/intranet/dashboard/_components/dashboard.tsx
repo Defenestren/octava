@@ -18,7 +18,7 @@ import { expensesData as initialExpensesData, kpis as initialExpensesKpis } from
 import { suppliersData as initialSuppliersData, kpis as initialSuppliersKpis } from '@/lib/data/suppliers';
 
 const KpiCard = ({ title, value, change }) => (
-    <Card>
+    <Card className="bg-card/90 backdrop-blur-sm">
         <CardHeader>
             <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
         </CardHeader>
@@ -550,7 +550,7 @@ export default function Dashboard() {
                 accept=".xlsx, .xls"
             />
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-                <TabsList className="flex-wrap h-auto">
+                <TabsList className="flex-wrap h-auto bg-card/90 backdrop-blur-sm">
                     <TabsTrigger value="sales">Ventas</TabsTrigger>
                     <TabsTrigger value="products">Productos</TabsTrigger>
                     <TabsTrigger value="marketing">Marketing</TabsTrigger>
@@ -573,7 +573,7 @@ export default function Dashboard() {
                         <KpiCard title="Precio Medio Venta" value={salesKpis.avgSalePrice} change={salesKpis.avgSalePriceChange} />
                         <KpiCard title="Tasa de Descuento" value={`${salesKpis.discountRate}`} />
                     </div>
-                    <Card>
+                    <Card className="bg-card/90 backdrop-blur-sm">
                         <CardHeader>
                             <CardTitle>Ventas por Mes</CardTitle>
                             <CardDescription>Resumen de los ingresos generados cada mes.</CardDescription>
@@ -600,7 +600,7 @@ export default function Dashboard() {
                         <KpiCard title="Margen Medio" value={`${productsKpis.avgMargin}%`} />
                         <KpiCard title="Proveedor Principal" value={productsKpis.topSupplier} />
                     </div>
-                     <Card>
+                     <Card className="bg-card/90 backdrop-blur-sm">
                         <CardHeader>
                             <CardTitle>Top 5 Productos por Stock</CardTitle>
                              <CardDescription>Productos con mayor número de unidades en el inventario.</CardDescription>
@@ -627,7 +627,7 @@ export default function Dashboard() {
                         <KpiCard title="Coste por Interacción" value={marketingKpis.costPerInteraction} />
                         <KpiCard title="Canal Principal" value={marketingKpis.topChannel} />
                     </div>
-                     <Card>
+                     <Card className="bg-card/90 backdrop-blur-sm">
                         <CardHeader>
                             <CardTitle>Interacciones y Coste por Campaña</CardTitle>
                              <CardDescription>Análisis del rendimiento y coste de las diferentes campañas de marketing.</CardDescription>
@@ -657,7 +657,7 @@ export default function Dashboard() {
                         <KpiCard title="Nuevos Clientes (Mes)" value={clientsKpis.newClientsThisMonth} />
                         <KpiCard title="Segmento Principal" value={clientsKpis.topSegment} />
                     </div>
-                     <Card>
+                     <Card className="bg-card/90 backdrop-blur-sm">
                         <CardHeader>
                             <CardTitle>Clientes Nuevos vs. Recurrentes</CardTitle>
                              <CardDescription>Evolución mensual de la base de clientes.</CardDescription>
@@ -686,7 +686,7 @@ export default function Dashboard() {
                         <KpiCard title="Ratio Músicos" value={employeesKpis.musicianRatio} />
                         <KpiCard title="Instrumento Principal" value={employeesKpis.topInstrument} />
                     </div>
-                     <Card>
+                     <Card className="bg-card/90 backdrop-blur-sm">
                         <CardHeader>
                             <CardTitle>Empleados por Departamento</CardTitle>
                              <CardDescription>Distribución de los empleados en la empresa.</CardDescription>
@@ -713,7 +713,7 @@ export default function Dashboard() {
                         <KpiCard title="Categoría Principal" value={expensesKpis.topCategory} />
                         <KpiCard title="IVA Medio" value={expensesKpis.avgVat} />
                     </div>
-                     <Card>
+                     <Card className="bg-card/90 backdrop-blur-sm">
                         <CardHeader>
                             <CardTitle>Distribución de Gastos</CardTitle>
                              <CardDescription>Desglose de los principales gastos operativos.</CardDescription>
@@ -740,7 +740,7 @@ export default function Dashboard() {
                         <KpiCard title="Riesgo Medio" value={suppliersKpis.avgRisk} />
                         <KpiCard title="País Principal" value={suppliersKpis.topCountry} />
                     </div>
-                     <Card>
+                     <Card className="bg-card/90 backdrop-blur-sm">
                         <CardHeader>
                             <CardTitle>Proveedores por País</CardTitle>
                              <CardDescription>Origen geográfico de nuestros proveedores.</CardDescription>
@@ -770,4 +770,5 @@ export default function Dashboard() {
     
 
     
+
 
