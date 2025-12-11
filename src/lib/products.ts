@@ -146,7 +146,7 @@ export const products: Product[] = [
         category: 'Baterías',
         price: 3200.00,
         description: 'El sonido que definió el rock. Tono cálido, resonante y versátil, hecho en EE.UU.',
-        image: defaultDrumImage,
+        image: { id: 'prod_img_ludwig', description: 'Batería Ludwig Classic Maple', imageUrl: '/ludwig-bateria-classic-maple-downbeat-vintage-blue-oyster.webp', imageHint: 'drum kit' },
         stock: 4,
         specs: {
             'Material': 'Arce de 7 capas',
