@@ -67,7 +67,8 @@ export default function BlogStyleChecker() {
                     rows={10}
                     className="min-h-[200px]"
                 />
-                <Button onClick={handleStyleCheck} className="w-full sm:w-auto" disabled={isPending}>
+                <Button onClick={handleStyleCheck} className="w-full sm:w-auto relative overflow-hidden group" disabled={isPending}>
+                    <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
                     {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Bot className="mr-2 h-4 w-4" />}
                     Verificar Estilo
                 </Button>

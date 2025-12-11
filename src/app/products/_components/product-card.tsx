@@ -34,8 +34,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="text-xl font-bold text-primary">
           {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(product.price)}
         </p>
-        <Button asChild>
-          <Link href="#">Ver Detalles</Link>
+        <Button asChild className="relative overflow-hidden group">
+          <Link href="#">
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
+            Ver Detalles
+          </Link>
         </Button>
       </CardFooter>
     </Card>

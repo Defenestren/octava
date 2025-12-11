@@ -47,7 +47,10 @@ export default function ContactPage() {
               <Input type="email" placeholder="Tu Email" />
               <Input placeholder="Asunto" />
               <Textarea placeholder="Tu mensaje..." rows={5} />
-              <Button size="lg" className="w-full">Enviar Mensaje</Button>
+              <Button size="lg" className="w-full relative overflow-hidden group">
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
+                Enviar Mensaje
+              </Button>
             </CardContent>
           </Card>
 

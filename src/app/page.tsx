@@ -47,8 +47,11 @@ export default function Home() {
                 Explora la Colección
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="font-bold bg-black/20 backdrop-blur-sm">
-              <Link href="/services">Nuestros Servicios</Link>
+            <Button asChild size="lg" variant="outline" className="font-bold bg-black/20 backdrop-blur-sm relative overflow-hidden group">
+              <Link href="/services">
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
+                Nuestros Servicios
+              </Link>
             </Button>
           </div>
         </div>
@@ -214,8 +217,9 @@ export default function Home() {
             <p className="mt-2 text-muted-foreground max-w-xl mx-auto">
               Únete a la familia OCTAVA y encuentra el instrumento que definirá tu sonido.
             </p>
-             <Button asChild className="mt-6" size="lg">
+             <Button asChild className="mt-6 relative overflow-hidden group" size="lg">
               <Link href="/products">
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
                 Encuentra Tu Instrumento
               </Link>
             </Button>

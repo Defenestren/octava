@@ -559,7 +559,8 @@ export default function Dashboard() {
                     <TabsTrigger value="expenses">Gastos</TabsTrigger>
                     <TabsTrigger value="suppliers">Proveedores</TabsTrigger>
                 </TabsList>
-                <Button onClick={triggerFileInput} disabled={isLoading}>
+                <Button onClick={triggerFileInput} disabled={isLoading} className="relative overflow-hidden group">
+                    <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
                     {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
                     Cargar Tablas
                 </Button>
@@ -769,3 +770,4 @@ export default function Dashboard() {
     
 
     
+

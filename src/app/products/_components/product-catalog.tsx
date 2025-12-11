@@ -108,7 +108,10 @@ export default function ProductCatalog() {
                         {brands.map(b => <SelectItem key={b} value={b}>{b === 'all' ? 'Todas las marcas' : b}</SelectItem>)}
                     </SelectContent>
                 </Select>
-                <Button onClick={handleManualFilter} className="w-full">Aplicar Filtros</Button>
+                <Button onClick={handleManualFilter} className="w-full relative overflow-hidden group">
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
+                  Aplicar Filtros
+                </Button>
             </CardContent>
         </Card>
 
@@ -125,14 +128,16 @@ export default function ProductCatalog() {
                     onChange={(e) => setAiNeeds(e.target.value)}
                     rows={4}
                 />
-                <Button onClick={handleAiFilter} className="w-full" disabled={isPending}>
+                <Button onClick={handleAiFilter} className="w-full relative overflow-hidden group" disabled={isPending}>
+                    <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
                     {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Bot className="mr-2 h-4 w-4" />}
                     Encontrar por mí
                 </Button>
             </CardContent>
         </Card>
         
-        <Button variant="outline" onClick={resetFilters} className="w-full">
+        <Button variant="outline" onClick={resetFilters} className="w-full relative overflow-hidden group">
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
             Limpiar filtros
         </Button>
       </aside>
