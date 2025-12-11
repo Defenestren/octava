@@ -25,7 +25,7 @@ export default function Header() {
       <div className="container flex h-24 items-center">
         <div className="mr-4 flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Image src="/gemini-2.5-flash-image_El_logo_lo_quiero_sin_fondo_y_vectorizado._Elimina_el_texto_y_la_linea_dorada_so-0 (1).png" alt="Octava Logo" width={320} height={200} className="h-20 w-auto" />
+            <Image src="/7-23.png" alt="Octava Logo" width={320} height={200} className="h-20 w-auto" />
           </Link>
         </div>
 
@@ -59,7 +59,7 @@ export default function Header() {
               <SheetContent side="left">
                 <div className="flex flex-col space-y-4 p-4">
                   <Link href="/" className="mb-4 flex items-center space-x-2">
-                    <Image src="/gemini-2.5-flash-image_El_logo_lo_quiero_sin_fondo_y_vectorizado._Elimina_el_texto_y_la_linea_dorada_so-0 (1).png" alt="Octava Logo" width={320} height={200} className="h-20 w-auto" />
+                    <Image src="/7-23.png" alt="Octava Logo" width={320} height={200} className="h-20 w-auto" />
                   </Link>
                   {navLinks.map(({ href, label }) => (
                     <Link
