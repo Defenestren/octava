@@ -26,7 +26,7 @@ export const products: Product[] = [
         category: 'Guitarras',
         price: 1250.00,
         description: 'Un clásico atemporal con el sonido y la sensación que solo una Fender puede ofrecer. Perfecta para rock, blues y country.',
-        image: placeholderImages.find(p => p.id === 'product-guitar-1') || defaultGuitarImage,
+        image: { id: 'prod_img_st_vintage', imageUrl: '/7-23.png', description: 'Guitarra Eléctrica ST Vintage', imageHint: 'electric guitar' },
         stock: 15,
         specs: {
             'Tipo de pastillas': 'Single-Coil',
