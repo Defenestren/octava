@@ -56,9 +56,9 @@
     },
     {
       "id": "contact-banner",
-      "description": "A vintage rotary telephone on a wooden desk.",
-      "imageUrl": "https://images.unsplash.com/photo-1615713508098-9c0c327df3a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx2aW50YWdlJTIwdGVsZXBob25lfGVufDB8fHx8MTc2NDg3MTM2OXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "vintage telephone"
+      "description": "Un hombre tocando la guitarra en un escenario",
+      "imageUrl": "/one-man-playing-guitar-plucking-strings-performing-rock-music-generated-by-ai-free-photo.webp",
+      "imageHint": "electric guitar stage"
     }
   ]
 }
