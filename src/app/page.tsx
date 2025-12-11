@@ -41,8 +41,11 @@ export default function Home() {
             Inspiramos y equipamos a músicos con instrumentos vintage excepcionales que encienden la pasión y elevan el arte.
           </p>
           <div className="mt-8 flex justify-center gap-4">
-            <Button asChild size="lg" className="font-bold">
-              <Link href="/products">Explora la Colección</Link>
+            <Button asChild size="lg" className="font-bold relative overflow-hidden group">
+              <Link href="/products">
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
+                Explora la Colección
+              </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="font-bold bg-black/20 backdrop-blur-sm">
               <Link href="/services">Nuestros Servicios</Link>
@@ -196,7 +199,7 @@ export default function Home() {
                   Accede a datos operativos detallados y documentos internos a través de la intranet de OCTAVA.
                 </p>
                 <Button asChild variant="link" className="text-primary text-lg">
-                  <Link href="/intranet">Ir al Panel de Intranet <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                  <Link href="/intranet" className="hover:no-underline">Ir al Panel de Intranet <ArrowRight className="ml-2 h-5 w-5" /></Link>
                 </Button>
               </div>
             </CardContent>
@@ -221,5 +224,7 @@ export default function Home() {
     </div>
   );
 }
+
+    
 
     
