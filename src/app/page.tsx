@@ -68,9 +68,9 @@ export default function Home() {
           </div>
           <div className="relative h-80 rounded-lg overflow-hidden shadow-2xl">
              <Image
-                src="https://picsum.photos/seed/luthier/800/600"
-                alt="Luthier trabajando en una guitarra"
-                data-ai-hint="luthier working"
+                src="/05_Imagen Corporativa Equipo OCTAVA.jpg"
+                alt="El equipo de OCTAVA"
+                data-ai-hint="team picture"
                 fill
                 className="object-cover"
               />
@@ -236,3 +236,6 @@ export default function Home() {
 
 
 
+
+
+    
