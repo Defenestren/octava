@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { OctavaLogo } from '@/components/icons';
+import Image from 'next/image';
 
 const navLinks = [
   { href: '/#about', label: 'Quiénes somos' },
@@ -18,13 +18,13 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="bg-secondary">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-2">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <OctavaLogo className="h-10 w-auto text-primary" />
+          <div className="flex items-center space-x-2 mb-2 md:mb-0">
+            <Image src="/logo_octava_60x40.svg" alt="Octava Logo" width={60} height={40} className="h-8 w-auto" />
             <span className="font-bold font-headline text-xl">OCTAVA</span>
           </div>
-          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 md:mb-0">
+          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-1 mb-2 md:mb-0">
             {navLinks.map(({ href, label }) => (
               <Link key={href} href={href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 {label}
@@ -40,7 +40,7 @@ export default function Footer() {
             ))}
           </div>
         </div>
-        <div className="mt-4 pt-4 border-t border-border text-center text-sm text-muted-foreground">
+        <div className="mt-2 pt-2 border-t border-border text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} OCTAVA Instruments. All Rights Reserved.</p>
         </div>
       </div>
