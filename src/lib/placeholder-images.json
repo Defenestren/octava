@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-image",
-      "description": "A dramatic shot of a vintage electric guitar on a stand, with soft, moody lighting.",
-      "imageUrl": "https://images.unsplash.com/photo-1684117736387-69935a4ed00d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx2aW50YWdlJTIwZ3VpdGFyfGVufDB8fHx8MTc2NDg3MTM3OHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "vintage guitar"
+      "description": "Octava Logo",
+      "imageUrl": "/7-23.png",
+      "imageHint": "company logo"
     },
     {
       "id": "product-guitar-1",

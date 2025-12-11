@@ -30,7 +30,7 @@ export default function Home() {
             alt={heroImage.description}
             data-ai-hint={heroImage.imageHint}
             fill
-            className="object-cover brightness-50"
+            className="object-contain brightness-100"
           />
         )}
         <div className="relative z-10 p-4 max-w-4xl mx-auto">
@@ -232,3 +232,4 @@ export default function Home() {
     
 
     
+
