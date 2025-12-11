@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description:
     'OCTAVA es el destino principal para músicos que buscan instrumentos de calidad y artesanía inigualables. Descubre nuestra colección de instrumentos de rock vintage premium.',
   keywords: ['guitarras vintage', 'instrumentos de rock', 'instrumentos premium', 'OCTAVA'],
+  icons: {
+    icon: '/gemini-2.5-flash-image_El_logo_lo_quiero_sin_fondo_y_vectorizado._Elimina_el_texto_y_la_linea_dorada_so-0 (1).png',
+  }
 };
 
 export default function RootLayout({
